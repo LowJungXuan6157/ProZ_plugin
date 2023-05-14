@@ -30,8 +30,8 @@
     <actions>
         <action
                 id="ProZ.GetX"
-                class="com.lowjungxuan.proz.GetX"
-                text="GetX"
+                class="com.lowjungxuan.proz.newFolder.NewFolderCreator"
+                text="GetX Bloc"
                 description="Create a new folder and Dart files."
                 icon="com.lowjungxuan.proz.MyIcons.GetX"
         >

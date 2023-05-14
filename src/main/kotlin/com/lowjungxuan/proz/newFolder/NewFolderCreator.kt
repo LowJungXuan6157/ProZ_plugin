@@ -1,42 +1,27 @@
-package com.lowjungxuan.proz
+package com.lowjungxuan.proz.newFolder
 
+import MyDialog
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.command.WriteCommandAction
-import com.intellij.openapi.ui.Messages
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiManager
+import com.lowjungxuan.proz.utils.toSnakeCase
 
-class GetX : AnAction() {
+class NewFolderCreator : AnAction() {
 
     override fun actionPerformed(event: AnActionEvent) {
         val project = event.project ?: return
-
-        // Show input dialog to get folder name
-        val folderName = Messages.showInputDialog(project, "Enter folder name", "New GetX Page", MyIcons.GetXDialog)
-        if (!folderName.isNullOrEmpty()) {
-            // Get current directory
-            val currentDir = getCurrentDirectory(event)
-
-            // Create new folder
-            val newFolder = currentDir?.createSubdirectory(folderName.toString())
-
-            // Create new files
-            newFolder?.let {
-                createFile(
-                    it,
-                    "${folderName}Page.dart",
-                    GetXTemplate.page.replace("${'$'}{folderName}", folderName.toString())
-                )
-                createFile(
-                    it,
-                    "${folderName}Controller.dart",
-                    GetXTemplate.controller.replace("${'$'}{folderName}", folderName.toString())
-                )
+        val dialog = MyDialog(project)
+        dialog.show()
+        if (dialog.isOK) {  // Check if the user clicked OK
+            val data = dialog.getDialogData()
+            when (data.option) {
+                1 -> createGetX(getCurrentDirectory(event)?.createSubdirectory(data.text.toSnakeCase()))
+                2 -> createBloc(getCurrentDirectory(event)?.createSubdirectory(data.text.toSnakeCase()))
             }
         }
-
     }
 
     private fun getCurrentDirectory(event: AnActionEvent): PsiDirectory? {
@@ -53,4 +38,19 @@ class GetX : AnAction() {
             directory.createFile(fileName).viewProvider.document?.setText(fileContent)
         }
     }
+
+    private fun createGetX(newFolder: PsiDirectory?) {
+        newFolder?.let {
+            createFile(
+                it,
+                "${it.name}_page.dart", NewFolderCreatorTemplate.getXPage(it.name)
+            )
+            createFile(
+                it,
+                "${it.name}_controller.dart", NewFolderCreatorTemplate.getXController(it.name)
+            )
+        }
+    }
+
+    private fun createBloc(newFolder: PsiDirectory?) {}
 }
