@@ -52,5 +52,24 @@ class NewFolderCreator : AnAction() {
         }
     }
 
-    private fun createBloc(newFolder: PsiDirectory?) {}
+    private fun createBloc(newFolder: PsiDirectory?) {
+        newFolder?.let {
+            createFile(
+                it,
+                "${it.name}_view.dart", NewFolderCreatorTemplate.bloc_view(it.name)
+            )
+            createFile(
+                it,
+                "${it.name}_event.dart", NewFolderCreatorTemplate.bloc_event(it.name)
+            )
+            createFile(
+                it,
+                "${it.name}_state.dart", NewFolderCreatorTemplate.bloc_state(it.name)
+            )
+            createFile(
+                it,
+                "${it.name}_bloc.dart", NewFolderCreatorTemplate.bloc(it.name)
+            )
+        }
+    }
 }
