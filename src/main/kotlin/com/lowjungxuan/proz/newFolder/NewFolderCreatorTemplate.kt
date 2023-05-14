@@ -71,11 +71,11 @@ class ${name.toCamelCase()}Bloc extends Bloc<${name.toCamelCase()}Event, ${name.
     emit(state.clone());
   }
 }"""
-    fun bloc_event(name: String):String = """abstract class ${name.toCamelCase()}Event {}
+    fun blocEvent(name: String):String = """abstract class ${name.toCamelCase()}Event {}
 
 class InitEvent extends ${name.toCamelCase()}Event {}"""
 
-    fun bloc_state(name: String):String = """class ${name.toCamelCase()}State {
+    fun blocState(name: String):String = """class ${name.toCamelCase()}State {
   ${name.toCamelCase()}State init() {
     return ${name.toCamelCase()}State();
   }
@@ -84,7 +84,7 @@ class InitEvent extends ${name.toCamelCase()}Event {}"""
     return ${name.toCamelCase()}State();
   }
 }"""
-    fun bloc_view(name: String) = """import 'package:flutter/material.dart';
+    fun blocView(name: String) = """import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '${name.toSnakeCase()}_bloc.dart';

@@ -79,14 +79,4 @@ class YamlElementVisitor(
     }
 
 
-    private fun re() {
-    }
-
-    private fun reIndex() {
-
-        pubFile?.let { psiFile ->
-            FileBasedIndex.getInstance().requestReindex(psiFile.virtualFile)
-        }
-    }
-
 }

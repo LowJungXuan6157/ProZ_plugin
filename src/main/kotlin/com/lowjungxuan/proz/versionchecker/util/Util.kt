@@ -39,17 +39,6 @@ class Util {
             return UIUtil.colorToHex(color)
         }
 
-        /**
-         * 字符串转换成Color对象
-         * @param colorStr 16进制颜色字符串
-         * @return Color对象
-         */
-        fun toColorFromString(colorStr: String): Color {
-            var c = colorStr
-            c = c.substring(4)
-            return Color(c.toInt(16))
-        }
-
 
         fun removeSpecialCharacters(string: String): String {
 

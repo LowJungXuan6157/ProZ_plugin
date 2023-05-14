@@ -12,8 +12,8 @@ import com.intellij.openapi.ui.popup.PopupStep
 import com.intellij.openapi.ui.popup.util.BaseListPopupStep
 import com.intellij.psi.PsiElement
 import com.intellij.ui.awt.RelativePoint
-import note.jdbc.FlutterCollectService
-import note.jdbc.SqliteConnectManager
+import com.lowjungxuan.proz.versionchecker.note.jdbc.FlutterCollectService
+import com.lowjungxuan.proz.versionchecker.note.jdbc.SqliteConnectManager
 import org.jetbrains.yaml.psi.impl.YAMLKeyValueImpl
 import com.lowjungxuan.proz.versionchecker.actions.PUB_URL
 import com.lowjungxuan.proz.versionchecker.i18n.PluginBundle

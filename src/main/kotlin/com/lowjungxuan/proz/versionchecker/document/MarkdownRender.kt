@@ -377,19 +377,6 @@ private fun StringBuilder.appendHighlightedByLexerAndEncodedAsHtmlCodeSnippet(
 
 private fun StringBuilder.appendStyledSpan(
     doHighlighting: Boolean,
-    attributesKey: TextAttributesKey,
-    value: String?
-): StringBuilder {
-    if (doHighlighting) {
-        appendStyledSpan(this, attributesKey, value, DocumentationSettings.getHighlightingSaturation(true))
-    } else {
-        append(value)
-    }
-    return this
-}
-
-private fun StringBuilder.appendStyledSpan(
-    doHighlighting: Boolean,
     attributes: TextAttributes,
     value: String?
 ): StringBuilder {

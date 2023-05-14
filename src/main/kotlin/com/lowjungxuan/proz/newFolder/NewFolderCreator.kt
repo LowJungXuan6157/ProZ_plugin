@@ -1,6 +1,5 @@
 package com.lowjungxuan.proz.newFolder
 
-import MyDialog
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
@@ -56,15 +55,15 @@ class NewFolderCreator : AnAction() {
         newFolder?.let {
             createFile(
                 it,
-                "${it.name}_view.dart", NewFolderCreatorTemplate.bloc_view(it.name)
+                "${it.name}_view.dart", NewFolderCreatorTemplate.blocView(it.name)
             )
             createFile(
                 it,
-                "${it.name}_event.dart", NewFolderCreatorTemplate.bloc_event(it.name)
+                "${it.name}_event.dart", NewFolderCreatorTemplate.blocEvent(it.name)
             )
             createFile(
                 it,
-                "${it.name}_state.dart", NewFolderCreatorTemplate.bloc_state(it.name)
+                "${it.name}_state.dart", NewFolderCreatorTemplate.blocState(it.name)
             )
             createFile(
                 it,

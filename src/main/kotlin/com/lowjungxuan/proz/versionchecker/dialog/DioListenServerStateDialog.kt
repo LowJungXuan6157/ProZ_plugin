@@ -13,12 +13,6 @@ import com.lowjungxuan.proz.versionchecker.socket.service.AppService
 import javax.swing.JComponent
 
 
-/**
- * 打开dio监听服务的状态弹窗
- */
-fun Project.openSocketStatusDialog() {
-    DioListenServerStateDialog(this).show()
-}
 class DioListenServerStateDialog(val project: Project) : DialogWrapper(project) {
 
 
@@ -66,22 +60,5 @@ class DioListenServerStateDialog(val project: Project) : DialogWrapper(project) 
 
         }
     }
-
-    private val statusText: String
-        get() {
-            return when (status) {
-                NEW_SESSION -> "连接已建立"
-                INPUT_SHUTDOWN -> "读通道已被关闭"
-                PROCESS_EXCEPTION -> "业务处理异常"
-                DECODE_EXCEPTION -> "协议解码异常"
-                INPUT_EXCEPTION -> "读操作异常"
-                OUTPUT_EXCEPTION -> "写操作异常"
-                SESSION_CLOSING -> "会话正在关闭中"
-                SESSION_CLOSED -> "会话关闭"
-                REJECT_ACCEPT -> "拒绝接受连接(Server)"
-                ACCEPT_EXCEPTION -> "服务端接受连接异常"
-                null -> "未知"
-            }
-        }
 
 }

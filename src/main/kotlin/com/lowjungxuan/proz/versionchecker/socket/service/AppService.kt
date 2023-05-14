@@ -16,6 +16,7 @@ import com.lowjungxuan.proz.versionchecker.form.socket.Request
 import com.lowjungxuan.proz.versionchecker.model.resource.ResourceCategory
 import com.lowjungxuan.proz.versionchecker.model.resource.ResourceCategoryTypeEnum
 import com.lowjungxuan.proz.versionchecker.model.user.User
+import com.lowjungxuan.proz.versionchecker.note.jdbc.SqliteConnectManager
 import com.lowjungxuan.proz.versionchecker.services.ItbugService
 import com.lowjungxuan.proz.versionchecker.services.JSONResult
 import com.lowjungxuan.proz.versionchecker.services.SERVICE
@@ -29,10 +30,6 @@ import javax.swing.SwingUtilities
 @Service
 class AppService : DioApiService.HandleFlutterApiModel {
 
-
-
-    // 全局的socket监听服务
-    private lateinit var server: AioQuickServer
 
     //用户信息
     var user: User? = null
@@ -80,7 +77,7 @@ class AppService : DioApiService.HandleFlutterApiModel {
     init {
         userRunStartManager.start()
         chatRoomLoadManager.start()
-        note.jdbc.SqliteConnectManager
+        SqliteConnectManager
     }
 
     /**

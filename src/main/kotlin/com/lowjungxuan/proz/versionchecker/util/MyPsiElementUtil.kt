@@ -52,7 +52,7 @@ class MyDartPsiElementUtil {
         /**
          * 创建var表达式
          */
-        fun createVarExpressionFromText(project: Project, text: String): DartVarDeclarationListImpl? {
+        private fun createVarExpressionFromText(project: Project, text: String): DartVarDeclarationListImpl? {
             val psiFile = DartElementGenerator.createDummyFile(project, text)
             return PsiTreeUtil.getChildOfType(psiFile, DartVarDeclarationListImpl::class.java)
         }
@@ -60,7 +60,7 @@ class MyDartPsiElementUtil {
         /**
          * 创建逗号
          */
-        fun createLeafPsiElement(project: Project): LeafPsiElement {
+        private fun createLeafPsiElement(project: Project): LeafPsiElement {
             val file = DartElementGenerator.createDummyFile(project, "var d = 'hello';")
             return PsiTreeUtil.getChildOfType(file, LeafPsiElement::class.java)!!
         }
@@ -68,7 +68,7 @@ class MyDartPsiElementUtil {
         /**
          * 根据类名创建PsiElement
          */
-        fun createDartClassBodyFromClassName(project: Project, className: String): DartClassDefinitionImpl {
+        private fun createDartClassBodyFromClassName(project: Project, className: String): DartClassDefinitionImpl {
             val file = DartElementGenerator.createDummyFile(
                 project, "class $className{\n" +
                         "\n}"
@@ -79,7 +79,7 @@ class MyDartPsiElementUtil {
         /**
          * 创建一个dart file
          */
-        fun createDartFileWithElement(
+        private fun createDartFileWithElement(
             project: Project,
             element: PsiElement,
             path: String,
@@ -129,27 +129,6 @@ class MyDartPsiElementUtil {
             }
             return false
 
-        }
-
-
-        /**
-         * 检测是否有相同的PsiElement
-         * 返回true 表示有相同的
-         * false 则没有
-         */
-        fun <T : PsiElement> checkElementEqName(
-            project: Project,
-            element: PsiElement,
-            text: String,
-            type: Class<T>
-        ): Boolean {
-            println(element.children.size)
-            val file = DartElementGenerator.createDummyFile(project, element.text)
-            val childrenOfAnyType = PsiTreeUtil.getChildrenOfAnyType(file.originalElement, type)
-            println(">>${childrenOfAnyType.size}")
-            return childrenOfAnyType.any {
-                it.text.equals(text)
-            }
         }
 
 
@@ -303,26 +282,6 @@ class MyDartPsiElementUtil {
             return PsiTreeUtil.findChildOfType(file, DartFactoryConstructorDeclarationImpl::class.java)!!
         }
 
-        /**
-         * 生成可空的属性
-         */
-        fun getNullProperties(type: String, name: String, project: Project): DartDefaultFormalNamedParameterImpl {
-            val createDummyFile = DartElementGenerator.createDummyFile(
-                project, "class B {\n" +
-                        "  B({$type $name});\n" +
-                        "}"
-            )
-            return PsiTreeUtil.getChildOfType(createDummyFile, DartDefaultFormalNamedParameterImpl::class.java)!!
-        }
-
-
-        /**
-         * 创建dart类节点
-         */
-        fun createDartNamePsiElement(name: String, project: Project): DartComponentNameImpl {
-            val createDummyFile = DartElementGenerator.createDummyFile(project, "class $name {}")!!
-            return PsiTreeUtil.getChildOfType(createDummyFile, DartComponentNameImpl::class.java)!!
-        }
 
         fun createDartDartReferenceExpressionImplPsiElement(
             name: String,

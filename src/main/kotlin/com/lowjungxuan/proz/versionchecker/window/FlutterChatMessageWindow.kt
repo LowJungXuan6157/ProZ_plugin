@@ -101,7 +101,7 @@ class FlutterChatMessageWindow(val project: Project, private val toolWindow: Too
     }
 
 
-    fun userInfoHandle() {
+    private fun userInfoHandle() {
         userInfo?.apply {
             val icon = ImageIcon(URL(picture),nickName)
             val ava = JBLabel(icon)

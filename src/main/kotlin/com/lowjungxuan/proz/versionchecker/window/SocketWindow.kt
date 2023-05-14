@@ -61,7 +61,7 @@ class SocketWindow : ToolWindowFactory {
 
         //找工作窗口
         if (ENABLE_FIND_JOBS_WINDOW) {
-            val jobsWindow = JobsWindow(p0, p1)
+            val jobsWindow = JobsWindow(p0)
             val jobsContent = instance.createContent(jobsWindow, "找工作", false)
             p1.contentManager.addContent(jobsContent)
         }

@@ -14,13 +14,3 @@ data class ResourceCategory(
 ) : Serializable
 
 
-class ResourceCategoryCovert : Converter<ResourceCategory>() {
-    override fun toString(value: ResourceCategory): String? {
-        return JSONObject.toJSONString(value)
-    }
-
-    override fun fromString(value: String): ResourceCategory? {
-        return JSONObject.parseObject(value,ResourceCategory::class.java)
-    }
-
-}

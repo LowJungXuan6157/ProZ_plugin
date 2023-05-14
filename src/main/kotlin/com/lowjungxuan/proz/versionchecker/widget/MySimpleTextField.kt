@@ -9,8 +9,6 @@ typealias MySimpleTextFieldSubmit = (value: String) -> Unit
 
 class MySimpleTextField(placeholder: String = "请输入内容", onSubmit: MySimpleTextFieldSubmit) : ExtendableTextField() {
 
-    constructor(onSubmit: MySimpleTextFieldSubmit) : this("请输入内容", onSubmit)
-
     init {
         border = BorderFactory.createEmptyBorder()
         emptyText.text = placeholder

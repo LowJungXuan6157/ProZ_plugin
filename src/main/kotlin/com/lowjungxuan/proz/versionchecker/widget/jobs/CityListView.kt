@@ -19,7 +19,7 @@ class CityListView(val project: Project,onListSelect: (category: ResourceCategor
 
     private val cityWidget = JobsCitySelectWidget(project)
 
-    private val refresh = DumbAwareAction.create(){
+    private val refresh = DumbAwareAction.create {
         refreshList()
     }
 

@@ -52,16 +52,6 @@ class MyPsiElementUtil {
         }
 
 
-        ///创建一个yaml keyValue节点
-        fun createYamlKeyValueElement(project: Project, key: String, value: String): YAMLKeyValueImpl? {
-            val createYamlDummyFile = createYamlDummyFile(project, "$key : $value")
-            if (createYamlDummyFile != null) {
-                return PsiTreeUtil.findChildOfType(createYamlDummyFile,YAMLKeyValueImpl::class.java)
-            }
-            return null
-        }
-
-
         /**
          * 插入节点到pubspec文件
          */
@@ -105,10 +95,6 @@ class MyPsiElementUtil {
                 psiElement.text
             }
             return psiElement?.text ?: ""
-        }
-
-        fun hasYamlMapping(element: PsiElement): Boolean {
-            return element.children.filterIsInstance<YAMLMappingImpl>().isNotEmpty()
         }
 
         /**
@@ -202,19 +188,6 @@ fun PsiElement.isDartPluginElement(): Boolean {
     return false
 }
 
-
-fun YAMLKeyValueImpl.isDartPluginElementWithKeyValue(): Boolean {
-    if (this.parents(false).iterator().hasNext() && this.parents(false)
-            .iterator().next().parent is YAMLKeyValueImpl
-    ) {
-        val ds = listOf("dependencies", "dev_dependencies", "dependency_overrides")
-        val parentKeyText = (this.parents(false).iterator().next().parent as YAMLKeyValueImpl).keyText
-        if (ds.contains(parentKeyText) && this.keyText != "flutter" && this.keyText != "flutter_test") {
-            return true
-        }
-    }
-    return false
-}
 
 fun PsiElement.getPluginName(): String {
     return MyPsiElementUtil.getPluginNameWithPsi(this)

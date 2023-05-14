@@ -26,16 +26,6 @@ fun AnActionEvent.getDartClassDefinition(): DartClassDefinitionImpl? {
     return null
 }
 
-fun DartClassDefinitionImpl.addAnnotation(name: String,project: Project):DartClassDefinitionImpl{
-    DartPsiElementUtil.classAddAnnotation(this,name,project)
-    return this
-}
-
-fun DartClassDefinitionImpl.addMixin(name: String,project: Project):DartClassDefinitionImpl{
-    DartPsiElementUtil.classAddMixin(this,name, project)
-    return this
-}
-
 object DartPsiElementUtil {
 
     /**

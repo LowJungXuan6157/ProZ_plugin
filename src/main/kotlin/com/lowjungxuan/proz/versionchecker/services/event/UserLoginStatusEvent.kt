@@ -15,7 +15,7 @@ interface UserLoginStatusEvent {
         val TOPIC = Topic.create("dd-user-login-status-change",UserLoginStatusEvent::class.java)
         fun listening(onUser: (user: User?)->Unit) {
             ApplicationManager.getApplication().messageBus.connect()
-                .subscribe(UserLoginStatusEvent.TOPIC, object : UserLoginStatusEvent {
+                .subscribe(TOPIC, object : UserLoginStatusEvent {
                     override fun loginSuccess(user: User?) {
                         onUser.invoke(user)
                     }

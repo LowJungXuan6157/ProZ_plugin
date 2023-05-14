@@ -61,7 +61,7 @@ class DartTypeInlayHintsProvider : InlayHintsProvider<GenerateAssetsClassConfigM
                                 val ins =
                                     hintsInlayPresentationFactory.simpleText(staticType, "类型:$staticType") { _, _ ->
                                         val ss = StringSelection(staticType)
-                                        val clipboard: Clipboard = Toolkit.getDefaultToolkit().getSystemClipboard()
+                                        val clipboard: Clipboard = Toolkit.getDefaultToolkit().systemClipboard
                                         clipboard.setContents(ss, null)
                                     }
                                 sink.addInlineElement(
@@ -90,7 +90,7 @@ class DartTypeInlayHintsProvider : InlayHintsProvider<GenerateAssetsClassConfigM
                                                     "\"",
                                                     ""
                                                 ).replace("\'", "")
-                                            val semicolonElement = element.parent.nextSibling;
+                                            val semicolonElement = element.parent.nextSibling
                                             if (semicolonElement is LeafPsiElement) {
                                                 sink.addInlineElement(
                                                     semicolonElement.endOffset,

@@ -11,12 +11,6 @@ abstract class MyDialogWrapper(open val project: Project): DialogWrapper(project
     }
 
 
-    fun setBaseSize() {
-        setSize(width - 200, height-200)
-        setLocation(100,100)
-    }
-
-
     val width: Int get() = ScreenUtil.getWidth()
     val height: Int get() = ScreenUtil.getHeight()
 }

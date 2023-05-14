@@ -16,14 +16,6 @@ interface FlutterProjectActionSelect {
         fun fire(appName: String) {
             ApplicationManager.getApplication().messageBus.syncPublisher(TOPIC).onSelect(appName)
         }
-        //监听
-        fun listing(onSelect: (name: String)->Unit) {
-            ApplicationManager.getApplication().messageBus.connect().subscribe(TOPIC,object : FlutterProjectActionSelect {
-                override fun onSelect(appName: String) {
-                    onSelect.invoke(appName)
-                }
-            })
-        }
     }
 
 

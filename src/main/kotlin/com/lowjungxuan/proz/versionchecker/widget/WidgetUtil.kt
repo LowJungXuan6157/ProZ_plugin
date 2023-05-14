@@ -45,17 +45,6 @@ object WidgetUtil {
     }
 
     /**
-     * 帮助组件
-     */
-    fun getHelpActionToolbar(name: String, action: (e: AnActionEvent) -> Unit): ActionToolbar {
-        fun createRightActions(): Array<AnAction> = arrayOf(
-            getHelpAnAction(action)
-        )
-        return ActionManager.getInstance()
-            .createActionToolbar(name, DefaultActionGroup(*createRightActions()), true)
-    }
-
-    /**
      * 帮助服务操作组
      * @param action 点击帮助图标执行事件
      */

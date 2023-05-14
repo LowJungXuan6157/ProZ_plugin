@@ -6,14 +6,14 @@ import org.jetbrains.yaml.psi.impl.YAMLKeyValueImpl
 
 ///插件的类型
 enum class FlutterPluginType(val type: String,val title: String){
-    Dependencies("dependencies","Default"),DevDependencies("dev_dependencies","Dev"),DependencyOverrides("dependency_overrides","Overrides")
+    Dependencies("dependencies","Default"),
 }
 ///flutter插件节点
 data class FlutterPluginElementModel(val name: String,val element: YAMLKeyValueImpl,val type: FlutterPluginType,var pubData: PubVersionDataModel? = null)
 
 /**
  * 判断一下是否为最新版本
- * @return [true] 表示为最新版本 [false] - 不是最新版本
+ * @return true 表示为最新版本 false - 不是最新版本
  */
 fun FlutterPluginElementModel.isLastVersion():Boolean {
 
@@ -27,7 +27,7 @@ fun FlutterPluginElementModel.isLastVersion():Boolean {
             return false
         }
     }
-    return true;
+    return true
 }
 
 /**

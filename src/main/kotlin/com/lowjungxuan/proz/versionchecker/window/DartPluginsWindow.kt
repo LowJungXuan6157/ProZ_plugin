@@ -12,7 +12,7 @@ import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBList
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.util.ui.components.BorderLayoutPanel
-import note.jdbc.FlutterCollectService
+import com.lowjungxuan.proz.versionchecker.note.jdbc.FlutterCollectService
 import com.lowjungxuan.proz.versionchecker.bus.FlutterPluginCollectEvent
 import com.lowjungxuan.proz.versionchecker.bus.FlutterPluginCollectEventType
 import com.lowjungxuan.proz.versionchecker.common.MyDumbAwareAction

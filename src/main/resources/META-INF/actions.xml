@@ -18,7 +18,7 @@
     </actions>
 
     <actions>
-        <group id="dart-file-actions" text="FlutterVersionCheckX Tools" popup="true" icon="/icons/16px.svg">
+        <group id="dart-file-actions" text="ProZ Tools" popup="true" icon="/icons/16px.svg">
             <action id="gen-fun-doc" class="com.lowjungxuan.proz.versionchecker.actions.GenerateFunctionDocument"
                     text="Add Comments to Functions">
                 <keyboard-shortcut keymap="$default" first-keystroke="meta K"/>

@@ -1,12 +1,6 @@
 package com.lowjungxuan.proz.versionchecker.model.example
 
 
-data class ExampleResult (
-    val data: List<ResourceModel>,
-    val message: String,
-    val state: Long
-)
-
 data class ResourceModel (
     val authority: Long,
     val category: CategoryModel,

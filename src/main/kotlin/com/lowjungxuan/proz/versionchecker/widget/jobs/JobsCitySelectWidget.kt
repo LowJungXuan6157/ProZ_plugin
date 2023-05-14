@@ -97,10 +97,6 @@ class JobsCitySelectWidgetWithComBox(val project: Project) : ComboBox<ResourceCa
         renderer = ListCellRenderer { _, p1, _, _, _ -> JBLabel(p1?.name?:"") }
     }
 
-    fun refresh() {
-        refreshCityList()
-    }
-
     private fun refreshCityList() {
         SERVICE.create<ItbugService>().findAllJobCity()
             .enqueue(object : Callback<JSONResult<List<ResourceCategory>>> {

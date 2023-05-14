@@ -10,7 +10,7 @@ data class PubVersionDataModel(
     private val lastVersion get() = '^' + latest.version
 
     /**
-     * 判断版本是否为最新版本.将传入的[version]和[latest.version]进行比如,如果不是最新版则执行[apply]函数
+     * 判断版本是否为最新版本.将传入的[version]和 lastest version 进行比如,如果不是最新版则执行[apply]函数
      * [apply] 函数回调一个最新版本
      */
     fun judge(version: String, apply: (lastVersionString: String) -> Unit) {
@@ -27,8 +27,8 @@ data class PubVersionDataModel(
     private fun getLastUpdateTime(): String {
         var timeString = latest.published
         val toCharArray = timeString.toCharArray()
-        val tChat = toCharArray.get(10)
-        if (tChat.equals('T')) {
+        val tChat = toCharArray[10]
+        if (tChat == 'T') {
             timeString = timeString.replace("T", " ")
         }
         val dotIndex = timeString.lastIndexOf(".")

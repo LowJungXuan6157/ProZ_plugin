@@ -1,4 +1,4 @@
-package note.jdbc
+package com.lowjungxuan.proz.versionchecker.note.jdbc
 
 import cn.hutool.core.date.DateUtil
 import cn.hutool.db.Entity

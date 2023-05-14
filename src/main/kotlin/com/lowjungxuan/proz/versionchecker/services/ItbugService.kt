@@ -79,9 +79,4 @@ interface ItbugService {
     @GET("api/public/jobs/find-job")
     fun findAllJob(@QueryMap params: MutableMap<String, Any>): Call<JSONResult<Pageable<MyResource>>>
 
-    /**
-     * 获取所有的博客分类
-     */
-    @GET("api/blog/category-list")
-    fun findAllBlogCategory(): Call<JSONResult<List<BlogCategory>>>
 }

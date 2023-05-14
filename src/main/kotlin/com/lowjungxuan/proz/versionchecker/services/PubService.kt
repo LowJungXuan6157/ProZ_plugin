@@ -1,6 +1,6 @@
 package com.lowjungxuan.proz.versionchecker.services
 
-import PluginVersionModel
+import com.lowjungxuan.proz.versionchecker.model.PluginVersionModel
 import com.lowjungxuan.proz.versionchecker.model.PubVersionDataModel
 import retrofit2.Call
 import retrofit2.Callback
@@ -46,11 +46,6 @@ interface PubService {
     @GET("packages/{pluginName}.json")
     fun getPackageVersions(@Path("pluginName") pluginName: String) : Call<PluginVersionModel>
 
-    /**
-     * 搜索包
-     */
-    @GET("api/search")
-    fun search(@Query("q") pluginName: String): Call<PubSearchResult>
 }
 
 /**

@@ -1,6 +1,6 @@
 package com.lowjungxuan.proz.versionchecker.dialog
 
-import PluginVersionModel
+import com.lowjungxuan.proz.versionchecker.model.PluginVersionModel
 import cn.hutool.http.HttpRequest
 import com.google.gson.Gson
 import com.intellij.openapi.project.Project
@@ -234,7 +234,7 @@ class VersionSelectModel(val versions: List<String>) : DefaultComboBoxModel<Stri
         return versions.size
     }
 
-    override fun getElementAt(index: Int) = versions.get(index)
+    override fun getElementAt(index: Int) = versions[index]
 
     override fun getIndexOf(anObject: Any?) = versions.indexOf(anObject as String)
 

@@ -14,7 +14,7 @@ import com.jetbrains.lang.dart.psi.impl.*
 import com.jetbrains.lang.dart.util.DartElementGenerator
 
 
-val checkSuperClassNames = listOf<String>("StatefulWidget")
+val checkSuperClassNames = listOf("StatefulWidget")
 
 /**
  * 自动修复功能: Avoid using private types in public APIs.
@@ -30,22 +30,6 @@ class DartPublicFunctionFix : LocalInspectionTool() {
 }
 
 class DartPublicFunctionApiFixVisitor(val holder: ProblemsHolder) : PsiElementVisitor() {
-
-    fun getMethodCallRefre(dmdElement: DartMethodDeclarationImpl): PsiElement? {
-        ///获取返回值
-        val dartFuntionBodyList = dmdElement.childrenOfType<DartFunctionBodyImpl>()
-        if (dartFuntionBodyList.isNotEmpty()) {
-            val dartCallExpressionList = dartFuntionBodyList.first().childrenOfType<DartCallExpressionImpl>()
-            if (dartCallExpressionList.isNotEmpty()) {
-                val dartReferenceExpessionList =
-                    dartCallExpressionList.first().childrenOfType<DartReferenceExpressionImpl>()
-                if (dartReferenceExpessionList.isNotEmpty()) {
-                    return dartReferenceExpessionList.first()
-                }
-            }
-        }
-        return null
-    }
 
     override fun visitElement(element: PsiElement) {
         //如果节点是一个类
@@ -76,7 +60,7 @@ class DartPublicFunctionApiFixVisitor(val holder: ProblemsHolder) : PsiElementVi
                                             returnTypes.first(),
                                             "梁典典: dart建议将返回类型修改为公有变量",
                                             ProblemHighlightType.WARNING,
-                                            PublicApiRenameFix(returnTypeEle, returnTypeEle.text, dmdElement)
+                                            PublicApiRenameFix(returnTypeEle, returnTypeEle.text)
                                         )
                                     }
 
@@ -95,7 +79,7 @@ class DartPublicFunctionApiFixVisitor(val holder: ProblemsHolder) : PsiElementVi
 }
 
 ///修复类
-class PublicApiRenameFix(val element: PsiElement, val className: String, var functionElement: PsiElement) :
+class PublicApiRenameFix(val element: PsiElement, val className: String) :
     LocalQuickFixOnPsiElement(element) {
     private val renameText = className.removePrefix("_")
 

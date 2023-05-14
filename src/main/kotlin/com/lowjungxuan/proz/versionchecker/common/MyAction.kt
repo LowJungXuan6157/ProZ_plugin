@@ -35,10 +35,7 @@ abstract class MyDumbAwareAction : DumbAwareAction {
 
 abstract class MyToggleAction : ToggleAction {
 
-    constructor()
     constructor(name: Supplier<String>) : super(name)
-
-    constructor(name: String, desc: String, icon: Icon) : super(name, desc, icon)
 
     override fun getActionUpdateThread(): ActionUpdateThread {
         return ActionUpdateThread.BGT

@@ -13,17 +13,6 @@ import com.lowjungxuan.proz.versionchecker.services.impl.ModelToFreezedModelServ
 import com.lowjungxuan.proz.versionchecker.util.toastWithError
 import javax.swing.JComponent
 
-fun Any.toJsonFormart(): String {
-    return JSONObject.toJSONString(this, JSONWriter.Feature.PrettyFormat)
-}
-
-/**
- * 设置为滚动面板
- */
-fun JComponent.scroll(): JComponent {
-    return JBScrollPane(this)
-}
-
 fun String.getVirtualFile(): VirtualFile? {
     return LocalFileSystem.getInstance().findFileByPath(this)
 }

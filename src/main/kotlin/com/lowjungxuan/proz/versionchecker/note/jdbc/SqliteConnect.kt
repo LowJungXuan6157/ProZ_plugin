@@ -1,4 +1,4 @@
-package note.jdbc
+package com.lowjungxuan.proz.versionchecker.note.jdbc
 
 import cn.hutool.db.handler.EntityListHandler
 import cn.hutool.db.sql.SqlExecutor

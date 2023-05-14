@@ -11,16 +11,3 @@ data class BlogCategory (
     val name: String
 )
 
-@Serializable
-data class BlogWriteModel (
-    var title: String = "",
-    var content: String = "",
-    var tags: List<String> = emptyList(),
-
-    @SerialName("categoryId")
-    var categoryID: Long? = null,
-
-    var alias: String = "",
-    var thumbnail: String = "",
-    var id: Long? = null
-)

@@ -26,9 +26,8 @@ class ChatMessageRender : ListCellRenderer<IdeaMessage> {
         isSelected: Boolean,
         cellHasFocus: Boolean
     ): Component {
-        if(value == null) return JBLabel()
-        val panel = ChatModelRender(value)
-        return panel
+        if (value == null) return JBLabel()
+        return ChatModelRender(value)
     }
 
 }

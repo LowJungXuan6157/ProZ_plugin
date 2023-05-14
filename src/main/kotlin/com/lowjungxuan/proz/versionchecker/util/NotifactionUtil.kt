@@ -25,22 +25,6 @@ class MyNotificationUtil {
                 .notify(project)
         }
 
-        /**
-         * 显示tool window 弹窗
-         */
-        fun toolWindowShowMessage(project: Project, message: String, type: MessageType = MessageType.INFO) {
-            ToolWindowManager.getInstance(project)
-                .notifyByBalloon(toolWindowId, type, "<html><p>$message</p></html>")
-        }
-
-        fun tooWindowShowMessage(project: Project, com: JComponent) {
-            val createBalloon = JBPopupFactory.getInstance().createBalloonBuilder(com).createBalloon()
-            val toolWindow = ToolWindowManager.getInstance(project).getToolWindow(toolWindowId)
-            toolWindow?.apply {
-                createBalloon.showInCenterOf(toolWindow.component)
-            }
-        }
-
 
         ///弹出登录的窗口
         fun showLoginDialog(project: Project) {

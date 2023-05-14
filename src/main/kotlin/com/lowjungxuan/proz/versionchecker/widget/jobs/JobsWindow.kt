@@ -1,12 +1,11 @@
 package com.lowjungxuan.proz.versionchecker.widget.jobs
 
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.wm.ToolWindow
 import com.intellij.ui.components.JBPanel
 import java.awt.GridBagConstraints
 import java.awt.GridBagLayout
 
-class JobsWindow(val project: Project, private val toolWindow: ToolWindow) : JBPanel<JobsWindow>(GridBagLayout()) {
+class JobsWindow(val project: Project) : JBPanel<JobsWindow>(GridBagLayout()) {
 
     private val cityList = CityListView(project) {
         postListWidget.changeListWithCategoryId(it.id.toLong())

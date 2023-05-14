@@ -25,7 +25,7 @@ class RewardDialog(var project: Project) : DialogWrapper(project) {
 
     }
 
-    val wxLabel: JBLabel
+    private val wxLabel: JBLabel
         get() = JBLabel().apply {
             maximumSize = Dimension(50, 50)
         }

@@ -13,36 +13,6 @@ val openAiCa = CredentialAttributes(generateServiceName("openai", "apiKey"))
 ///密码存储相关工具类
 object CredentialUtil {
 
-    /**
-     * 安全存储用户名和密码等信息
-     */
-    fun saveUserPasswordAndAccount(account: String, password: String) {
-        val credent = Credentials(user = account, password = password)
-        PasswordSafe.instance.set(ca, credent)
-    }
-
-    /**
-     * 获取本机存储的用户名和密码
-     */
-    fun getSavedCredentials(): UserAccount? {
-        val get = PasswordSafe.instance.get(ca)
-        get?.let {
-            val passwordAsString = it.getPasswordAsString()
-            val userName = it.userName
-            if (passwordAsString != null && userName != null) {
-                return UserAccount(userName, passwordAsString)
-            }
-        }
-        return null
-    }
-
-    /**
-     * 删除本机存储的用户名和密码
-     */
-    fun removeUserAccount() {
-        PasswordSafe.instance.set(ca, null)
-    }
-
 
     /**
      * 设置openAi的key

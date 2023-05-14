@@ -1,3 +1,5 @@
+package com.lowjungxuan.proz.newFolder
+
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.ValidationInfo
@@ -5,8 +7,6 @@ import java.awt.FlowLayout
 import java.awt.GridLayout
 import javax.swing.*
 
-// Define a data class to hold the return values
-data class DialogData(val text: String, val option: Int)
 
 class MyDialog(project: Project) : DialogWrapper(project) {
 

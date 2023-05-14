@@ -19,6 +19,6 @@ class OpenSettingAnAction : MyAction(AllIcons.General.Settings) {
 
     companion object {
         fun getInstance(): AnAction =
-            ActionManager.getInstance().getAction("shop.itbug.fluttercheckversionx.actions.OpenSettingAnAction")
+            ActionManager.getInstance().getAction("com.lowjungxuan.proz.versionchecker.actions.OpenSettingAnAction")
     }
 }

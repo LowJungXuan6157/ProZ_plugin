@@ -33,11 +33,11 @@ class DartPluginTimeDateHintsProvider:InlayHintsProvider<TimeDateHintSetting> {
         editor: Editor,
         settings: TimeDateHintSetting,
         sink: InlayHintsSink
-    ): InlayHintsCollector? {
+    ): InlayHintsCollector {
 
         return object : FactoryInlayHintsCollector(editor) {
             override fun collect(element: PsiElement, editor: Editor, sink: InlayHintsSink): Boolean {
-                if(element.isDartPluginElement()){
+//                if(element.isDartPluginElement()){
 //                    val callRespose = ServiceCreate.create(PubService::class.java).callPluginDetails(element.getPluginName())
 //                    val body = callRespose.execute().body()
 //                    if(body!=null){
@@ -48,19 +48,11 @@ class DartPluginTimeDateHintsProvider:InlayHintsProvider<TimeDateHintSetting> {
 //                    }else{
 //                        println("body为null")
 //                    }
-                }
+//                }
                 return true
             }
 
         }
-    }
-
-    fun formatText(model: PubVersionDataModel) : String{
-        val sb = StringBuilder()
-        val timer = model.latest.published
-       val v =  Util.Companion.RelativeDateFormat.format(timer)
-                sb.append("最后更新时间:$v")
-        return sb.toString()
     }
 
     override fun createConfigurable(settings: TimeDateHintSetting): ImmediateConfigurable {

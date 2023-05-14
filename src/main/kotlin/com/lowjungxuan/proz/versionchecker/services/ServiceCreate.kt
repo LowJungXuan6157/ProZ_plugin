@@ -2,12 +2,12 @@ package com.lowjungxuan.proz.versionchecker.services
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import com.lowjungxuan.proz.versionchecker.services.Env.Dev
 import com.lowjungxuan.proz.versionchecker.services.Env.Pro
 import com.lowjungxuan.proz.versionchecker.util.CredentialUtil
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 //当前环境
 val currentEnv = Dev
@@ -26,7 +26,7 @@ val SERVICE: ApiServiceCreate = when (currentEnv) {
     Pro -> ServiceCreateWithMe
 }
 
-open class ApiServiceCreate(var host: String) {
+open class ApiServiceCreate(host: String) {
     private var gson: Gson = GsonBuilder()
         .setLenient()
         .create()
