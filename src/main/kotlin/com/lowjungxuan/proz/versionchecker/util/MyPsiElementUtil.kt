@@ -278,24 +278,6 @@ class MyDartPsiElementUtil {
             )
         }
 
-        fun freezedGetDartFactoryConstructorDeclarationImpl(file: PsiFile): DartFactoryConstructorDeclarationImpl {
-            return PsiTreeUtil.findChildOfType(file, DartFactoryConstructorDeclarationImpl::class.java)!!
-        }
-
-
-        fun createDartDartReferenceExpressionImplPsiElement(
-            name: String,
-            project: Project
-        ): DartReferenceExpressionImpl {
-            val file = DartElementGenerator.createDummyFile(
-                project, "class $name{" +
-                        "}" +
-                        "var b = $name();"
-            )!!
-            return PsiTreeUtil.getChildOfType(file, DartReferenceExpressionImpl::class.java)!!
-
-        }
-
 
         ///生成一个单例类
         fun genClassConstructor(project: Project, className: String): PsiFile? {

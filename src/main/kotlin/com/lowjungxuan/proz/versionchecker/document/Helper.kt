@@ -48,15 +48,6 @@ class Helper {
             sb.append("\n")
         }
 
-        fun addMarkdownTableLine(vararg values: String, sb: java.lang.StringBuilder) {
-            var headerStr = "|"
-            values.forEach {
-                headerStr += " $it |"
-            }
-            sb.append(headerStr)
-            sb.append("\n")
-        }
-
         /**
          * 把文本设置到剪贴板（复制）
          */

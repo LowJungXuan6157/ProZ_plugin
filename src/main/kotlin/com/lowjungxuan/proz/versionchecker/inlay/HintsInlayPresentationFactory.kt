@@ -51,9 +51,4 @@ class HintsInlayPresentationFactory(private val factory: PresentationFactory) {
         }
     }
 
-    data class MenuItem(
-        val title: String,
-        val icon: Icon,
-        val key: String,
-    )
 }

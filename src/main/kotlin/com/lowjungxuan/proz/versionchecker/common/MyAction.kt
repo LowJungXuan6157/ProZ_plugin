@@ -33,9 +33,7 @@ abstract class MyDumbAwareAction : DumbAwareAction {
     }
 }
 
-abstract class MyToggleAction : ToggleAction {
-
-    constructor(name: Supplier<String>) : super(name)
+abstract class MyToggleAction(name: Supplier<String>) : ToggleAction(name) {
 
     override fun getActionUpdateThread(): ActionUpdateThread {
         return ActionUpdateThread.BGT

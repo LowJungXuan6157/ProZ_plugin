@@ -5,7 +5,6 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import org.smartboot.socket.StateMachineEnum
-import org.smartboot.socket.transport.AioQuickServer
 import org.smartboot.socket.transport.AioSession
 import retrofit2.Call
 import retrofit2.Callback

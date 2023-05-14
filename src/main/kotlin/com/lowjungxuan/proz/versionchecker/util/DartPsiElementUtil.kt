@@ -2,8 +2,6 @@ package com.lowjungxuan.proz.versionchecker.util
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.application.runWriteAction
-import com.intellij.openapi.project.Project
 import com.intellij.psi.util.PsiTreeUtil
 import com.jetbrains.lang.dart.psi.impl.DartClassDefinitionImpl
 import com.jetbrains.lang.dart.psi.impl.DartComponentNameImpl
@@ -58,31 +56,8 @@ object DartPsiElementUtil {
         return getTypeWithVar(element).findLast { it == '?' } != null
     }
 
-    fun getModels(list: List<DartVarDeclarationListImpl>) : List<DartClassProperty> {
-       return list.map { it.covertDartClassPropertyModel() }
-    }
-
-    /**
-     * 给class添加注解
-     */
-    fun classAddAnnotation(classElement: DartClassDefinitionImpl,name: String,project: Project) {
-        val metadata = MyDartPsiElementUtil.generateDartMetadata(name, project)
-        val generateSpace = MyDartPsiElementUtil.generateSpace(project)
-        runWriteAction {
-            classElement.addAfter(generateSpace,classElement.prevSibling)
-            classElement.addAfter(metadata,classElement.prevSibling)
-        }
-    }
-
-    fun classAddMixin(classElement: DartClassDefinitionImpl,name: String,project: Project) {
-        val generateSpace = MyDartPsiElementUtil.generateSpace(project, " ")
-        val generateMixins = MyDartPsiElementUtil.generateMixins(project, name)
-        val nameElement = PsiTreeUtil.findChildOfType(classElement, DartComponentNameImpl::class.java)!!
-        runWriteAction {
-            nameElement.addBefore(generateSpace,classElement.nextSibling)
-            nameElement.addBefore(generateMixins,classElement.nextSibling)
-        }
-
+    fun getModels(list: List<DartVarDeclarationListImpl>): List<DartClassProperty> {
+        return list.map { it.covertDartClassPropertyModel() }
     }
 
 

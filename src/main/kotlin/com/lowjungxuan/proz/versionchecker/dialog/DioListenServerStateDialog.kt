@@ -5,11 +5,10 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.dsl.builder.panel
-import org.smartboot.socket.StateMachineEnum
-import org.smartboot.socket.StateMachineEnum.*
-import org.smartboot.socket.transport.AioSession
 import com.lowjungxuan.proz.versionchecker.bus.SocketConnectStatusMessageBus
 import com.lowjungxuan.proz.versionchecker.socket.service.AppService
+import org.smartboot.socket.StateMachineEnum
+import org.smartboot.socket.transport.AioSession
 import javax.swing.JComponent
 
 
@@ -22,10 +21,9 @@ class DioListenServerStateDialog(val project: Project) : DialogWrapper(project) 
     private var threadIsAlive = false
 
 
-
     init {
         super.init()
-        title = "Dio Listen to server status"
+        title = "Dio Listen To Server Status"
         changeListen()
         checkDioThread()
     }
@@ -55,7 +53,7 @@ class DioListenServerStateDialog(val project: Project) : DialogWrapper(project) 
                 button("检测") {
                     checkDioThread()
                 }
-                label(if(threadIsAlive) "活跃状态" else "已关闭")
+                label(if (threadIsAlive) "活跃状态" else "已关闭")
             }
 
         }

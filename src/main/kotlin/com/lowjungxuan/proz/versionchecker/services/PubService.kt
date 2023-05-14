@@ -7,8 +7,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
-import com.lowjungxuan.proz.versionchecker.model.PubSearchResult
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -38,13 +36,13 @@ interface PubService {
      * 获取插件的相关数据
      */
     @GET("api/packages/{plugName}")
-    fun callPluginDetails(@Path("plugName") plugName:String) : Call<PubVersionDataModel>
+    fun callPluginDetails(@Path("plugName") plugName: String): Call<PubVersionDataModel>
 
     /**
      * 获取包的版本列表
      */
     @GET("packages/{pluginName}.json")
-    fun getPackageVersions(@Path("pluginName") pluginName: String) : Call<PluginVersionModel>
+    fun getPackageVersions(@Path("pluginName") pluginName: String): Call<PluginVersionModel>
 
 }
 
@@ -53,10 +51,10 @@ interface PubService {
  */
 suspend fun <T> Call<T>.await(): T {
     return suspendCoroutine { continuation ->
-        enqueue(object : Callback<T>{
+        enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
                 val body = response.body()
-                if(body!=null) continuation.resume(body)
+                if (body != null) continuation.resume(body)
                 else continuation.resumeWithException(MyException("请求数据出现错误:${response.isSuccessful} $response"))
             }
 

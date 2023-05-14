@@ -1,8 +1,5 @@
 package com.lowjungxuan.proz.versionchecker.services
 
-import retrofit2.Call
-import retrofit2.http.*
-import com.lowjungxuan.proz.versionchecker.model.BlogCategory
 import com.lowjungxuan.proz.versionchecker.model.Pageable
 import com.lowjungxuan.proz.versionchecker.model.chat.IdeaMessage
 import com.lowjungxuan.proz.versionchecker.model.chat.SendTextModel
@@ -11,6 +8,8 @@ import com.lowjungxuan.proz.versionchecker.model.resource.ResourceCategory
 import com.lowjungxuan.proz.versionchecker.model.user.User
 import com.lowjungxuan.proz.versionchecker.services.params.AddCityApiModel
 import com.lowjungxuan.proz.versionchecker.services.params.AddJobParams
+import retrofit2.Call
+import retrofit2.http.*
 
 data class LoginParam(val loginNumber: String, val password: String)
 data class LoginResult(val token: String, val user: User)

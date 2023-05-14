@@ -10,24 +10,20 @@ import com.intellij.psi.PsiFileFactory
 import com.intellij.psi.PsiManager
 import com.intellij.psi.impl.PsiFileFactoryImpl
 import com.intellij.psi.impl.source.tree.LeafPsiElement
-import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.util.childrenOfType
-import com.intellij.psi.util.parents
 import com.intellij.testFramework.LightVirtualFile
 import com.intellij.util.IncorrectOperationException
 import com.jetbrains.lang.dart.DartFileType
+import com.lowjungxuan.proz.versionchecker.constance.igFlutterPlugin
+import com.lowjungxuan.proz.versionchecker.model.FlutterPluginElementModel
+import com.lowjungxuan.proz.versionchecker.model.FlutterPluginType
 import org.jetbrains.yaml.YAMLElementGenerator
 import org.jetbrains.yaml.YAMLLanguage
 import org.jetbrains.yaml.YAMLUtil
 import org.jetbrains.yaml.psi.YAMLFile
 import org.jetbrains.yaml.psi.impl.YAMLBlockMappingImpl
 import org.jetbrains.yaml.psi.impl.YAMLKeyValueImpl
-import org.jetbrains.yaml.psi.impl.YAMLMappingImpl
-import com.lowjungxuan.proz.versionchecker.constance.igFlutterPlugin
-import com.lowjungxuan.proz.versionchecker.model.FlutterPluginElementModel
-import com.lowjungxuan.proz.versionchecker.model.FlutterPluginType
 import java.io.File
-
 
 
 /**
@@ -36,20 +32,6 @@ import java.io.File
 class MyPsiElementUtil {
 
     companion object {
-
-
-        /**
-         * 创建yaml的虚拟文件
-         */
-        private fun createYamlDummyFile(myProject: Project, text: String): PsiFile? {
-            val factory = PsiFileFactory.getInstance(myProject)
-            val name = "dummy.yaml"
-            val virtualFile = LightVirtualFile(
-                name, DartFileType.INSTANCE,
-                text
-            )
-            return (factory as PsiFileFactoryImpl).trySetupPsiForFile(virtualFile, YAMLLanguage.INSTANCE, false, true)
-        }
 
 
         /**

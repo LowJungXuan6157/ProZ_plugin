@@ -5,7 +5,6 @@ import com.intellij.lang.documentation.DocumentationMarkup.*
 import com.intellij.lang.documentation.DocumentationSettings
 import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.EditorColorsManager
-import com.intellij.openapi.editor.colors.TextAttributesKey
 import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil
 import com.intellij.openapi.editor.richcopy.HtmlSyntaxInfoUtil.appendStyledSpan
@@ -14,6 +13,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.text.StringUtil
 import com.intellij.util.ui.UIUtil
 import com.jetbrains.lang.dart.DartLanguage
+import com.lowjungxuan.proz.versionchecker.util.toHexString
 import org.intellij.markdown.IElementType
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.MarkdownTokenTypes
@@ -22,7 +22,6 @@ import org.intellij.markdown.flavours.gfm.GFMElementTypes
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 import org.intellij.markdown.flavours.gfm.GFMTokenTypes
 import org.intellij.markdown.parser.MarkdownParser
-import com.lowjungxuan.proz.versionchecker.util.toHexString
 
 /**
  * markdown节点
@@ -158,9 +157,15 @@ fun MarkdownNode.toHtml(): String {
                 val startDelimiter = node.child(MarkdownTokenTypes.BACKTICK)?.text
                 if (startDelimiter != null) {
                     val text = node.text.substring(startDelimiter.length).removeSuffix(startDelimiter)
-                    sb.append("<code style='display:block;background-color: #${
-                        UIUtil.getEditorPaneBackground().toHexString()
-                    };border: 1px solid blue;padding:4px;font-size:${DocumentationSettings.getMonospaceFontSizeCorrection(true)}%;'>")
+                    sb.append(
+                        "<code style='display:block;background-color: #${
+                            UIUtil.getEditorPaneBackground().toHexString()
+                        };border: 1px solid blue;padding:4px;font-size:${
+                            DocumentationSettings.getMonospaceFontSizeCorrection(
+                                true
+                            )
+                        }%;'>"
+                    )
                     sb.appendHighlightedByLexerAndEncodedAsHtmlCodeSnippet(
                         DocumentationSettings.getInlineCodeHighlightingMode(),
                         comment.project,
@@ -169,9 +174,11 @@ fun MarkdownNode.toHtml(): String {
                     )
                     sb.append("</code>")
                 } else {
-                    sb.append("<code style='display:block;background-color: #${
-                        UIUtil.getEditorPaneBackground().toHexString()
-                    };border: 1px solid blue;padding:4px;' >$nodeText</code>")
+                    sb.append(
+                        "<code style='display:block;background-color: #${
+                            UIUtil.getEditorPaneBackground().toHexString()
+                        };border: 1px solid blue;padding:4px;' >$nodeText</code>"
+                    )
                 }
             }
 
@@ -180,7 +187,11 @@ fun MarkdownNode.toHtml(): String {
                 sb.append(
                     "<div style='background-color:#${
                         UIUtil.getEditorPaneBackground().toHexString()
-                    };padding: 12px;border-radius: 25px;margin: 12px 0px;'><pre style='display:block;'><code style='display:block;font-size:${DocumentationSettings.getMonospaceFontSizeCorrection(true)}%;'>"
+                    };padding: 12px;border-radius: 25px;margin: 12px 0px;'><pre style='display:block;'><code style='display:block;font-size:${
+                        DocumentationSettings.getMonospaceFontSizeCorrection(
+                            true
+                        )
+                    }%;'>"
                 )
                 processChildren()
                 sb.append("</code></pre></div>")
