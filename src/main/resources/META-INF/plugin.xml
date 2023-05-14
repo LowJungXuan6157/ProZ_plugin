@@ -1,36 +1,40 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>com.lowjungxuan.proz</id>
 
-    <!-- Public plugin name should be written in Title Case.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
     <name>ProZ</name>
 
-    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="lowjungxuan@gmail.com.com" url="https://www.linkedin.com/in/low-jung-xuan-442b32222/">Low Jung Xuan
+    <vendor email="lowjungxuan@gmail.com.com" url="https://www.linkedin.com/in/low-jung-xuan-442b32222/">
+        Low Jung Xuan
     </vendor>
-
-    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description>This plugin is helping VeecoTech Developer increase performance</description>
 
-    <!-- Product and plugin compatibility requirements.
-         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.platform</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
+    <depends optional="true" config-file="actions.xml">com.intellij.modules.lang</depends>
+    <depends optional="true" config-file="jobs_actions.xml">com.intellij.modules.lang</depends>
+    <depends>Dart</depends>
+    <depends>io.flutter</depends>
+    <depends>org.jetbrains.kotlin</depends>
+    <depends>org.intellij.plugins.markdown</depends>
+    <depends>org.jetbrains.plugins.terminal</depends>
+    <resource-bundle>messages.pluginBundle</resource-bundle>
+
     <change-notes>
         Initial Upload
     </change-notes>
-    <!-- Extension points defined by the plugin.
-         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+
+    <!--live template auto import to setting-->
     <extensions defaultExtensionNs="com.intellij">
         <defaultLiveTemplates file="liveTemplates/GetX.xml"/>
-        <liveTemplateContext id="FLUTTER" implementation="com.lowjungxuan.proz.FlutterLiveTemplateContext"/>
+        <liveTemplateContext contextId="FLUTTER" implementation="com.lowjungxuan.proz.FlutterLiveTemplateContext"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij">
         <defaultLiveTemplates file="liveTemplates/Bloc.xml"/>
-        <liveTemplateContext id="FLUTTER" implementation="com.lowjungxuan.proz.FlutterLiveTemplateContext"/>
+        <liveTemplateContext contextId="FLUTTER" implementation="com.lowjungxuan.proz.FlutterLiveTemplateContext"/>
     </extensions>
+
+    <!--right-click to show-->
     <actions>
         <action
                 id="ProZ.GetX"
@@ -42,4 +46,142 @@
             <add-to-group group-id="NewGroup" anchor="first"/>
         </action>
     </actions>
+    <extensions defaultExtensionNs="com.intellij">
+
+
+        <!--    排水沟图标    -->
+        <codeInsight.lineMarkerProvider
+                language="yaml"
+                implementationClass="com.lowjungxuan.proz.versionchecker.linemark.PluginDartIconLineMark"/>
+
+
+        <!--    plugin版本自动检测,并自动修复    -->
+        <localInspection language="yaml" displayName="Auto version show" groupPath="Yaml"
+                         groupBundle="messages.InspectionsBundle"
+                         bundle="messages.pluginBundle"
+                         groupKey="group.names.probable.bugs" enabledByDefault="true" level="ERROR"
+                         implementationClass="com.lowjungxuan.proz.versionchecker.tools.AutoVersionTool"/>
+
+        <!--    dart文件里面的_命名自动修复功能, hints    -->
+        <localInspection language="Dart" displayName="Dart public api fix" groupPath="Dart" enabledByDefault="true"
+                         implementationClass="com.lowjungxuan.proz.versionchecker.tools.DartPublicFunctionFix"
+                         groupName="Dart public api fix"/>
+
+        <!--     yaml折叠   -->
+        <!--        <lang.foldingBuilder implementationClass="com.lowjungxuan.proz.versionchecker.fold.PubYamlPathAndGithubFold"-->
+        <!--                             language="yaml"/>-->
+
+
+        <!--    plugin版本自动联想功能    -->
+        <completion.contributor language="yaml"
+                                implementationClass="com.lowjungxuan.proz.versionchecker.hints.PluginVersionHints"
+                                order="first"/>
+
+        <completion.contributor language="Dart"
+                                implementationClass="com.lowjungxuan.proz.versionchecker.hints.AssetsFilePathAutoComplete"/>
+
+        <completion.contributor language="Dart"
+                                implementationClass="com.lowjungxuan.proz.versionchecker.hints.FreezedPartAutoComplicate"/>
+        <completion.contributor language="Dart"
+                                implementationClass="com.lowjungxuan.proz.versionchecker.hints.IpHostAutoCompletionContributor"/>
+        <!--   项目被打开回调事件     -->
+        <postStartupActivity implementation="com.lowjungxuan.proz.versionchecker.activity.FlutterProjectOpenActivity"/>
+        <applicationService serviceImplementation="com.lowjungxuan.proz.versionchecker.services.PluginStateService"
+                            order="first"/>
+        <applicationService
+                serviceImplementation="com.lowjungxuan.proz.versionchecker.config.GenerateAssetsClassConfig"/>
+        <applicationService serviceImplementation="com.lowjungxuan.proz.versionchecker.inlay.DartAISetting"/>
+        <notificationGroup id="plugin_new_version_notify" displayType="BALLOON"/>
+        <!--   dio socket 相关通知    -->
+        <notificationGroup displayType="BALLOON" id="dio_socket_notify"/>
+
+        <!--    检查插件是否在项目中已经使用过     -->
+        <codeInsight.inlayProvider
+                implementationClass="com.lowjungxuan.proz.versionchecker.inlay.PluginInlayHintsProvider"
+                language="yaml"
+        />
+
+        <!--    json编辑器如果value值是图片类型,则使用inlay表示这是一个图片,悬停上去可以预览图片信息    -->
+        <codeInsight.inlayProvider implementationClass="com.lowjungxuan.proz.versionchecker.inlay.json.JsonImageInlay"
+                                   language="JSON"/>
+
+
+        <!--    插件更新更新时间内联提示     -->
+        <codeInsight.inlayProvider
+                implementationClass="com.lowjungxuan.proz.versionchecker.inlay.DartPluginTimeDateHintsProvider"
+                language="yaml"/>
+
+        <!--   dart变量的内联显示     -->
+        <codeInsight.inlayProvider
+                implementationClass="com.lowjungxuan.proz.versionchecker.inlay.dartfile.DartTypeInlayHintsProvider"
+                language="Dart"/>
+
+        <!--        open ai-->
+        <codeInsight.inlayProvider implementationClass="com.lowjungxuan.proz.versionchecker.inlay.DartCodeAIInlay"
+                                   language="Dart"/>
+
+        <!--   插件socket服务     -->
+        <applicationService serviceImplementation="com.lowjungxuan.proz.versionchecker.socket.service.AppService"/>
+        <applicationService serviceImplementation="com.lowjungxuan.proz.versionchecker.config.DioxListingUiConfig"/>
+        <projectService
+                serviceImplementation="com.lowjungxuan.proz.versionchecker.config.JsonToFreezedSettingModelConfig"/>
+        <!--   Json编辑器悬停显示预览图片     -->
+        <lang.documentationProvider
+                implementationClass="com.lowjungxuan.proz.versionchecker.inlay.json.JsonPreviewDocument"
+                language="JSON"/>
+
+        <!--    pubspec.yaml插鼠标悬停显示插件信息     -->
+        <lang.documentationProvider implementationClass="com.lowjungxuan.proz.versionchecker.document.YamlDocument"
+                                    language="yaml" order="first"/>
+
+        <!--    dart文档的HTML实现    -->
+        <!--        <lang.documentationProvider implementationClass="com.lowjungxuan.proz.versionchecker.document.DartDocumentExt"-->
+        <!--                                    language="Dart"-->
+        <!--                                    order="first, after Translation.TranslatedDocumentationProvider.Dart"/>-->
+
+        <!--   dio监听http请求小窗口   -->
+        <toolWindow factoryClass="com.lowjungxuan.proz.versionchecker.window.SocketWindow"
+                    id="Dio Request"
+                    anchor="bottom"
+                    icon="/icons/flutter.svg"/>
+
+        <!--   底部状态栏展示小部件     -->
+        <statusBarWidgetFactory implementation="com.lowjungxuan.proz.versionchecker.services.MyUserBarFactory"/>
+
+        <diff.DiffExtension implementation="com.lowjungxuan.proz.versionchecker.diff.PubYamlGithubAndPathDiff"/>
+
+        <!--        系统设置-->
+        <applicationConfigurable instance="com.lowjungxuan.proz.versionchecker.setting.AppConfig" parentId="language"/>
+
+        <editorNotificationProvider
+                implementation="com.lowjungxuan.proz.versionchecker.notif.PubPluginVersionCheckNotification"/>
+
+
+    </extensions>
+
+    <projectListeners>
+        <listener class="com.lowjungxuan.proz.versionchecker.listeners.PubspecYamlVersionFixedListener"
+                  topic="com.intellij.analysis.problemsView.ProblemsListener"/>
+    </projectListeners>
+    <actions>
+        <action
+                id="FlutterPubPackageSearch"
+                class="com.lowjungxuan.proz.versionchecker.actions.FlutterPubPackageSearch"
+                text="搜索pub包">
+        </action>
+
+        <action id="AssetsAutoGenerateClassAction"
+                class="com.lowjungxuan.proz.versionchecker.actions.AssetsAutoGenerateClassAction"
+                icon="/icons/refresh.svg">
+            <add-to-group
+                    group-id="ProjectViewPopupMenu"
+                    anchor="after"
+                    relative-to-action="ProjectViewPopupMenuSettingsGroup"/>
+        </action>
+        <action id="com.lowjungxuan.proz.versionchecker.actions.OpenSettingAnAction"
+                class="com.lowjungxuan.proz.versionchecker.actions.OpenSettingAnAction"
+                text="Setting"
+                icon="/icons/setting.svg"/>
+    </actions>
+
 </idea-plugin>
