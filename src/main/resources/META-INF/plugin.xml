@@ -24,8 +24,12 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <defaultLiveTemplates file="liveTemplates/ProZ.xml"/>
-        <liveTemplateContext id="FLUTTER" implementation="com.lowjungxuan.proz.GetXContext"/>
+        <defaultLiveTemplates file="liveTemplates/GetX.xml"/>
+        <liveTemplateContext id="FLUTTER" implementation="com.lowjungxuan.proz.FlutterLiveTemplateContext"/>
+    </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <defaultLiveTemplates file="liveTemplates/Bloc.xml"/>
+        <liveTemplateContext id="FLUTTER" implementation="com.lowjungxuan.proz.FlutterLiveTemplateContext"/>
     </extensions>
     <actions>
         <action
