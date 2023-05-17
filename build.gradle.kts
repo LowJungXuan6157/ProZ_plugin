@@ -9,7 +9,7 @@ version = "0.0.1"
 
 dependencies {
     implementation("io.sentry:sentry:5.7.3")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.1")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 }
 
@@ -19,12 +19,12 @@ repositories {
 
 intellij {
     pluginName.set("ProZ")
-    // intellij idea
+//    intellij idea
     version.set("2022.2.5")
     type.set("IC") // Target IDE Platform
-    // android studio
-    version.set("2022.2.1.18")
-    type.set("AI")
+//    android studio
+//    version.set("2022.2.1.18")
+//    type.set("AI")
     updateSinceUntilBuild.set(true)
     downloadSources.set(true)
 
