@@ -36,8 +36,8 @@ intellij {
     version.set("2022.2.5")
     type.set("IC") // Target IDE Platform
 //    android studio
-//    version.set("2022.2.1.18")
-//    type.set("AI")
+    version.set("2022.2.1.18")
+    type.set("AI")
     updateSinceUntilBuild.set(true)
     downloadSources.set(true)
 

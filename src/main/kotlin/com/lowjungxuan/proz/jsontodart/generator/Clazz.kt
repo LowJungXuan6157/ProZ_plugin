@@ -2,8 +2,8 @@ package com.lowjungxuan.proz.jsontodart.generator
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import com.lowjungxuan.proz.jsontodart.utils.toLowerCaseFirstOne
-import com.lowjungxuan.proz.jsontodart.utils.toUpperCaseFirstOne
+import com.lowjungxuan.proz.utils.toCamelCase
+import com.lowjungxuan.proz.utils.toSnakeCase
 
 abstract class Clazz(
     open val root: MutableList<Clazz>,
@@ -62,8 +62,8 @@ abstract class Clazz(
     }
 
     fun getStatement() = "${getClassName()}? ${getCamelName()}"
-    fun getFieldName() = getClassName().toLowerCaseFirstOne()
-    fun getCamelName() = name.split("_").reduce { acc, s -> "$acc${s.toUpperCaseFirstOne()}" }
+    fun getFieldName() = name.toSnakeCase()
+    fun getCamelName() = name.toCamelCase()[0].lowercaseChar() + name.toCamelCase().substring(1)
     fun getComment() = "$name : ${content.toString().replace("\n", "")}"
     fun getJsonAssignment() = "\"$name\": ${toJson()}"
 
@@ -79,7 +79,6 @@ data class EmptyClazz(
     override val content: Any?,
     override val children: List<Clazz>?
 ) : Clazz(root, name, content, children) {
-
     override fun getClassName() = "dynamic"
     override fun getAssignments(parent: String) = listOf("map['$name'],")
     override fun map(obj: String) = ""
@@ -117,7 +116,7 @@ data class ObjectClazz(
         root.add(this)
     }
 
-    override fun getClassName() = "${name.toUpperCaseFirstOne()}Bean"
+    override fun getClassName() = "${name.toCamelCase()}Model"
     override fun getAssignments(parent: String) = listOf("map['$name']!=null ? ${getClassName()}.fromMap(map['$name']) : null,")
     override fun map(obj: String): String {
         return "${getClassName()}.fromMap($obj)"

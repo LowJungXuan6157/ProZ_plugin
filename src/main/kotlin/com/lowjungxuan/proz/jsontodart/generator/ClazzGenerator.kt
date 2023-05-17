@@ -6,7 +6,7 @@ import com.google.gson.JsonParseException
 import com.google.gson.JsonParser
 import com.intellij.util.containers.isNullOrEmpty
 import com.lowjungxuan.proz.jsontodart.utils.Settings
-import com.lowjungxuan.proz.jsontodart.utils.toUpperCaseFirstOne
+import com.lowjungxuan.proz.utils.toCamelCase
 
 class ClazzGenerator(val settings: Settings?) {
 
@@ -24,9 +24,7 @@ class ClazzGenerator(val settings: Settings?) {
         }.let { (clazz, clazzes) ->
             val sb = StringBuilder()
 
-            sb.append("import 'package:freezed_annotation/freezed_annotation.dart';\n\n")
-            sb.append("part '$fileName.freezed.dart';\n")
-            sb.append("part '$fileName.g.dart';\n\n")
+            sb.append("import 'package:pro_z/pro_z.dart';\n\n")
 
             clazzes.reversed().forEach {
                 sb.append(printClazz(it == clazz, it))
@@ -51,9 +49,9 @@ class ClazzGenerator(val settings: Settings?) {
         val sb = StringBuilder()
 
         val className = if (keepName)
-            clazz.name.toUpperCaseFirstOne()
+            clazz.name.toCamelCase()
         else
-            clazz.getClassName().toUpperCaseFirstOne()
+            clazz.getClassName().toCamelCase()
 
 
         // comments
@@ -67,27 +65,67 @@ class ClazzGenerator(val settings: Settings?) {
 //        }
 
         // class
-        sb.append("@freezed\n")
-            .append("class $className with _\$$className {\n")
+        sb.append("class $className extends Serializable {\n")
 
         // constructor
-        sb.append("  const factory $className(")
         if (!clazz.children.isNullOrEmpty()) {
-            sb.append("{")
             clazz.children!!.map {
-                "\n    @JsonKey(name: '${it.name}') ${it.getStatement()},"
+                "  ${it.getStatement()};//${it.getClassName()}\n"
             }.forEach {
                 sb.append(it)
             }
-            sb.append("\n  }")
         }
-        sb.append(") = _$className;\n\n")
-
+        sb.append("\n")
+        if (!clazz.children.isNullOrEmpty()) {
+            sb.append("  $className({\n")
+            clazz.children!!.map {
+                "    this.${it.getCamelName()},\n"
+            }.forEach {
+                sb.append(it)
+            }
+            sb.append("  });\n")
+        }
+        sb.append("\n")
         // json
-        sb.append("  factory $className.fromJson(Map<String, Object?> json) => _\$${className}FromJson(json);\n")
-
+        if (!clazz.children.isNullOrEmpty()) {
+            sb.append("  $className.fromJson(Map<String, dynamic> json) {\n")
+            clazz.children!!.map {
+                "    ${it.getCamelName()} = json['${it.getFieldName()}'];\n"
+            }.forEach {
+                sb.append(it)
+            }
+            sb.append("  }\n")
+        }
+        sb.append("\n")
+        if (!clazz.children.isNullOrEmpty()) {
+            sb.append("  Map<String, dynamic> toJson() {\n")
+            sb.append("    final Map<String, dynamic> data = new Map<String, dynamic>();\n")
+            clazz.children!!.map {
+                //    data['id'] = this.id;
+                "    data['${it.getFieldName()}'] = this.${it.getCamelName()};\n"
+            }.forEach {
+                sb.append(it)
+            }
+            sb.append("    return data;\n")
+            sb.append("  }\n")
+        }
+        sb.append("\n")
+        sb.append("  @override\n")
+        sb.append("  fromJson(Map<String, dynamic>? json) {\n")
+        sb.append("    if (json == null) return null;\n")
+        sb.append("    return $className.fromJson(json)\n")
+        sb.append("  }\n")
+        sb.append("\n")
+        sb.append("  @override\n")
+        sb.append("  List<$className> listFromJson(List? json) {\n")
+        sb.append("    if (json == null) return [];\n")
+        sb.append("    List<$className> list = [];\n")
+        sb.append("    for (var item in json) {\n")
+        sb.append("      list.add($className.fromJson(item));\n")
+        sb.append("    }\n")
+        sb.append("    return list;\n")
+        sb.append("  }\n")
         sb.append("}")
-
         return sb.toString()
     }
 }

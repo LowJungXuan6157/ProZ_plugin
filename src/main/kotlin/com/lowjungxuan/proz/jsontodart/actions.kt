@@ -17,6 +17,7 @@ import com.intellij.psi.util.PsiUtilBase
 import com.lowjungxuan.proz.jsontodart.ui.GeneratorDialog
 import com.lowjungxuan.proz.jsontodart.ui.Model
 import com.lowjungxuan.proz.jsontodart.utils.*
+import com.lowjungxuan.proz.utils.toCamelCase
 import javax.swing.JFrame
 
 class DartJsonGenerateAction : AnAction() {
@@ -24,9 +25,9 @@ class DartJsonGenerateAction : AnAction() {
         val project = event.getData(PlatformDataKeys.PROJECT) as Project
         val input = PsiFileFactory.getInstance(project).createFileFromText(Language.findLanguageByID(JsonLanguage.INSTANCE.id)!!, "")
         val output = PsiUtilBase.getPsiFileInEditor(event.getData(PlatformDataKeys.EDITOR) as Editor, project)!!.virtualFile
-        val className = output.nameWithoutExtension.toUpperCaseFirstOne()
+        val className = output.nameWithoutExtension.toCamelCase()
             .split("_")
-            .reduce { acc, s -> "$acc${s.toUpperCaseFirstOne()}" }
+            .reduce { acc, s -> "$acc${s.toCamelCase()}" }
 
         GeneratorDialog(project, input, Model(className, output.nameWithoutExtension)) { _, code ->
             output.write(project, code)

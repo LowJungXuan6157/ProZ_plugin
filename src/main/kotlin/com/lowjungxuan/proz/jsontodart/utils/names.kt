@@ -1,15 +1,5 @@
 package com.lowjungxuan.proz.jsontodart.utils
 
-fun String.toUpperCaseFirstOne(): String {
-    if (isEmpty()) return this
-    return if (Character.isUpperCase(this[0])) this else Character.toUpperCase(this[0]) + this.substring(1)
-}
-
-fun String.toLowerCaseFirstOne(): String {
-    if (this.isEmpty()) return this
-    return if (Character.isLowerCase(this[0])) this else Character.toLowerCase(this[0]) + this.substring(1)
-}
-
 /**
  * Create valid Dart file name for class (snake_case)
  */
