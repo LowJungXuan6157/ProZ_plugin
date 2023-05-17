@@ -42,7 +42,7 @@ abstract class Clazz(
                 return BaseClazz(root, "double", name, any, null)
 
             // 都不匹配的情况，默认为 String 类型
-            return  BaseClazz(root, "String", name, any, null)
+            return BaseClazz(root, "String", name, any, null)
         }
 
         fun json2Clazz(root: MutableList<Clazz>, jsonObject: JsonObject): List<Clazz> {
@@ -61,15 +61,17 @@ abstract class Clazz(
         private fun Any.isBoolean() = toString().let { it == "true" || it == "false" }
     }
 
-    fun getStatement() = "${getClassName()}? ${getCamelName()}"
+    fun getConstructor() = "${runtimeType()}${if (runtimeType() == "dynamic") " " else "? "}${getCamelName()};"
+    fun getParameter() = "this.${getCamelName()},"
+    fun getFromJson() = "${getCamelName()} = ${getAssignments(runtimeType())};"
+    fun getToJson() = "data['$name'] = ${toJson()};"
     fun getFieldName() = name.toSnakeCase()
     fun getCamelName() = name.toCamelCase()[0].lowercaseChar() + name.toCamelCase().substring(1)
     fun getComment() = "$name : ${content.toString().replace("\n", "")}"
-    fun getJsonAssignment() = "\"$name\": ${toJson()}"
 
     abstract fun toJson(): String
-    abstract fun getAssignments(parent: String): List<String>
-    abstract fun getClassName(): String
+    abstract fun getAssignments(parent: String): String
+    abstract fun runtimeType(): String
     abstract fun map(obj: String): String
 }
 
@@ -79,8 +81,8 @@ data class EmptyClazz(
     override val content: Any?,
     override val children: List<Clazz>?
 ) : Clazz(root, name, content, children) {
-    override fun getClassName() = "dynamic"
-    override fun getAssignments(parent: String) = listOf("map['$name'],")
+    override fun runtimeType() = "dynamic"
+    override fun getAssignments(parent: String) = "json['$name']"
     override fun map(obj: String) = ""
     override fun toJson() = "${getCamelName()}?.toJson()"
 }
@@ -93,8 +95,8 @@ data class BaseClazz(
     override val children: List<Clazz>?
 ) : Clazz(root, name, content, children) {
 
-    override fun getClassName() = type
-    override fun getAssignments(parent: String) = listOf("map['$name'],")
+    override fun runtimeType() = type
+    override fun getAssignments(parent: String) = "json['$name']"
     override fun map(obj: String): String {
         return when (type) {
             "bool" -> "$obj.toString() == 'true'"
@@ -103,6 +105,7 @@ data class BaseClazz(
             else -> "$obj.toString()"
         }
     }
+
     override fun toJson() = getCamelName()
 }
 
@@ -116,10 +119,11 @@ data class ObjectClazz(
         root.add(this)
     }
 
-    override fun getClassName() = "${name.toCamelCase()}Model"
-    override fun getAssignments(parent: String) = listOf("map['$name']!=null ? ${getClassName()}.fromMap(map['$name']) : null,")
+    override fun runtimeType() = name.toCamelCase()
+    override fun getAssignments(parent: String) = "${runtimeType()}.shared.fromJson(json['$name'])"
+
     override fun map(obj: String): String {
-        return "${getClassName()}.fromMap($obj)"
+        return "${runtimeType()}.fromJson($obj)"
     }
 
     override fun toJson() = "${getCamelName()}?.toJson()"
@@ -133,28 +137,27 @@ data class ListClazz(
     val child: Clazz?
 ) : Clazz(root, name, content, children) {
 
-    override fun getClassName() = "List<${child?.getClassName() ?: "dynamic"}>"
+    override fun runtimeType() = "List<${child?.runtimeType() ?: "dynamic"}>"
 
     override fun map(obj: String): String {
         return if (child == null || child is EmptyClazz) "$obj!=null ? []..addAll($obj as List) : null"
         else "$obj!=null ? []..addAll(($obj as List).map((${obj}o) => ${child.map("${obj}o")})) : null"
     }
 
-    override fun getAssignments(parent: String): List<String> {
-        return if (child == null || child is EmptyClazz) listOf("map['$name'],")
-        else listOf(
-            "map['$name']!=null ? ([]..addAll(",
-            "  (map['$name'] as List).map((o) => ${child.map("o")})",
-            ")) : null,"
-        )
-    }
-    override fun toJson(): String {
-        if(child == null || child is BaseClazz) return getCamelName();
+    override fun getAssignments(parent: String): String {
+        return if (child == null || child is EmptyClazz) "json['$name']"
+        else "${name.toCamelCase()}.shared.listFromJson(json['$name'])"
 
-        if(child.getClassName() == "dynamic") {
-            return "${getCamelName()}?.map((o) {try{ return o.toJson(); }catch(e){ return o; }}).toList(growable: false)"
+
+    }
+
+    override fun toJson(): String {
+        if (child == null || child is BaseClazz) return getCamelName();
+
+        if (child.runtimeType() == "dynamic") {
+            return "${getCamelName()}?.map((o) {try{ return o.toJson(); }catch(e){ return o; }}).toList() ?? []"
         }
 
-        return "${getCamelName()}?.map((o)=>o.toJson()).toList(growable: false)"
+        return "${getCamelName()}?.map((e) => e.toJson()).toList() ?? []"
     }
 }

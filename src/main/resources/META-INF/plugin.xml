@@ -8,6 +8,8 @@
     <depends>org.jetbrains.plugins.yaml</depends>
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.java</depends>
+    <depends>Dart</depends>
+    <depends>io.flutter</depends>
     <change-notes>
         Initial Upload
     </change-notes>

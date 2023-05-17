@@ -51,18 +51,7 @@ class ClazzGenerator(val settings: Settings?) {
         val className = if (keepName)
             clazz.name.toCamelCase()
         else
-            clazz.getClassName().toCamelCase()
-
-
-        // comments
-//        if (settings?.generateComments == true) {
-//            clazz.children?.map {
-//                "// ${it.getComment()}\n"
-//            }?.forEach {
-//                sb.append(it)
-//            }
-//            sb.append("\n")
-//        }
+            clazz.runtimeType().toCamelCase()
 
         // class
         sb.append("class $className extends Serializable {\n")
@@ -70,50 +59,58 @@ class ClazzGenerator(val settings: Settings?) {
         // constructor
         if (!clazz.children.isNullOrEmpty()) {
             clazz.children!!.map {
-                "  ${it.getStatement()};//${it.getClassName()}\n"
+                "  ${it.getConstructor()}\n"
             }.forEach {
                 sb.append(it)
             }
         }
         sb.append("\n")
+
+        // parameter
         if (!clazz.children.isNullOrEmpty()) {
             sb.append("  $className({\n")
             clazz.children!!.map {
-                "    this.${it.getCamelName()},\n"
+                "    ${it.getParameter()}\n"
             }.forEach {
                 sb.append(it)
             }
             sb.append("  });\n")
         }
         sb.append("\n")
-        // json
+
+        // fromJson(map)
         if (!clazz.children.isNullOrEmpty()) {
             sb.append("  $className.fromJson(Map<String, dynamic> json) {\n")
             clazz.children!!.map {
-                "    ${it.getCamelName()} = json['${it.getFieldName()}'];\n"
+                "    ${it.getFromJson()}\n"
             }.forEach {
                 sb.append(it)
             }
             sb.append("  }\n")
         }
         sb.append("\n")
+
+        // toJson()
         if (!clazz.children.isNullOrEmpty()) {
+            sb.append("  @override\n")
             sb.append("  Map<String, dynamic> toJson() {\n")
-            sb.append("    final Map<String, dynamic> data = new Map<String, dynamic>();\n")
+            sb.append("    final Map<String, dynamic> data = <String, dynamic>{};\n")
             clazz.children!!.map {
-                //    data['id'] = this.id;
-                "    data['${it.getFieldName()}'] = this.${it.getCamelName()};\n"
+                "    ${it.getToJson()}\n"
             }.forEach {
                 sb.append(it)
             }
             sb.append("    return data;\n")
             sb.append("  }\n")
         }
+
+        sb.append("\n")
+        sb.append("  static final shared = $className();\n")
         sb.append("\n")
         sb.append("  @override\n")
         sb.append("  fromJson(Map<String, dynamic>? json) {\n")
         sb.append("    if (json == null) return null;\n")
-        sb.append("    return $className.fromJson(json)\n")
+        sb.append("    return $className.fromJson(json);\n")
         sb.append("  }\n")
         sb.append("\n")
         sb.append("  @override\n")

@@ -41,7 +41,15 @@ intellij {
     updateSinceUntilBuild.set(true)
     downloadSources.set(true)
 
-    plugins.set(listOf("org.jetbrains.kotlin", "org.jetbrains.plugins.yaml", "com.intellij.java"))
+    plugins.set(
+        listOf(
+            "Dart:222.4582",
+            "io.flutter:73.0.2",
+            "org.jetbrains.kotlin",
+            "org.jetbrains.plugins.yaml",
+            "com.intellij.java"
+        )
+    )
 }
 
 detekt {
