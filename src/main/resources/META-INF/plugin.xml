@@ -52,4 +52,19 @@
             <add-to-group group-id="NewGroup" anchor="first"/>
         </action>
     </actions>
+    <actions>
+        <!-- Add your actions here -->
+        <action id="com.lowjungxuan.proz.jsontodart.DartJsonGenerateAction" class="com.lowjungxuan.proz.jsontodart.DartJsonGenerateAction" text="Dart Class from JSON">
+            <add-to-group group-id="GenerateGroup" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="meta N"/>
+        </action>
+
+        <action id="DartJsonGenerator"
+                class="com.lowjungxuan.proz.jsontodart.DartJsonNewFileAction"
+                text="Dart Class from JSON"
+                icon="com.lowjungxuan.proz.MyIcons.GetX">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
+
+        </action>
+    </actions>
 </idea-plugin>
