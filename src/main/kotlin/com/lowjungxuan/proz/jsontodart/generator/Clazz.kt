@@ -63,14 +63,14 @@ abstract class Clazz(
 
     fun getConstructor() = "${runtimeType()}${if (runtimeType() == "dynamic") " " else "? "}${getCamelName()};"
     fun getParameter() = "this.${getCamelName()},"
-    fun getFromJson() = "${getCamelName()} = ${getAssignments(runtimeType())};"
+    fun getFromJson() = "${getCamelName()} = ${getFromJson(runtimeType())};"
     fun getToJson() = "data['$name'] = ${toJson()};"
     fun getFieldName() = name.toSnakeCase()
     fun getCamelName() = name.toCamelCase()[0].lowercaseChar() + name.toCamelCase().substring(1)
     fun getComment() = "$name : ${content.toString().replace("\n", "")}"
 
     abstract fun toJson(): String
-    abstract fun getAssignments(parent: String): String
+    abstract fun getFromJson(parent: String): String
     abstract fun runtimeType(): String
     abstract fun map(obj: String): String
 }
@@ -82,7 +82,7 @@ data class EmptyClazz(
     override val children: List<Clazz>?
 ) : Clazz(root, name, content, children) {
     override fun runtimeType() = "dynamic"
-    override fun getAssignments(parent: String) = "json['$name']"
+    override fun getFromJson(parent: String) = "json['$name']"
     override fun map(obj: String) = ""
     override fun toJson() = "${getCamelName()}?.toJson()"
 }
@@ -96,7 +96,7 @@ data class BaseClazz(
 ) : Clazz(root, name, content, children) {
 
     override fun runtimeType() = type
-    override fun getAssignments(parent: String) = "json['$name']"
+    override fun getFromJson(parent: String) = "json['$name']"
     override fun map(obj: String): String {
         return when (type) {
             "bool" -> "$obj.toString() == 'true'"
@@ -120,7 +120,7 @@ data class ObjectClazz(
     }
 
     override fun runtimeType() = name.toCamelCase()
-    override fun getAssignments(parent: String) = "${runtimeType()}.shared.fromJson(json['$name'])"
+    override fun getFromJson(parent: String) = "${runtimeType()}.shared.fromJson(json['$name'])"
 
     override fun map(obj: String): String {
         return "${runtimeType()}.fromJson($obj)"
@@ -144,7 +144,7 @@ data class ListClazz(
         else "$obj!=null ? []..addAll(($obj as List).map((${obj}o) => ${child.map("${obj}o")})) : null"
     }
 
-    override fun getAssignments(parent: String): String {
+    override fun getFromJson(parent: String): String {
         return if (child == null || child is EmptyClazz) "json['$name']"
         else "${name.toCamelCase()}.shared.listFromJson(json['$name'])"
 
