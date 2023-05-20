@@ -4,7 +4,6 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.lowjungxuan.proz.utils.digitsToWords
 import com.lowjungxuan.proz.utils.toCamelCase
-import com.lowjungxuan.proz.utils.toSnakeCase
 
 abstract class Clazz(
     open val root: MutableList<Clazz>,
@@ -63,9 +62,7 @@ abstract class Clazz(
     fun getParameter() = "this.${getCamelName()},"
     fun getFromJson() = "${getCamelName()} = ${getFromJson(runtimeType())};"
     fun getToJson() = "data['$name'] = ${toJson()};"
-    fun getFieldName() = name.toSnakeCase()
     fun getCamelName() = name.digitsToWords().toCamelCase()[0].lowercaseChar() + name.toCamelCase().substring(1)
-    fun getComment() = "$name : ${content.toString().replace("\n", "")}"
 
     abstract fun toJson(): String
     abstract fun getFromJson(parent: String): String

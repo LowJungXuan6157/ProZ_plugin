@@ -8,9 +8,8 @@ import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.editor.Editor
-import com.intellij.openapi.fileTypes.PlainTextFileType
 import com.intellij.openapi.project.Project
-import com.intellij.psi.PsiDirectory
+import com.intellij.openapi.ui.Messages
 import com.intellij.psi.PsiFileFactory
 import com.intellij.psi.PsiManager
 import com.intellij.psi.util.PsiUtilBase
@@ -40,60 +39,36 @@ class DartJsonGenerateAction : AnAction() {
 
 class DartJsonNewFileAction : AnAction() {
     override fun actionPerformed(event: AnActionEvent) {
-        val project = event.getData(PlatformDataKeys.PROJECT) as Project
+        val project = CommonDataKeys.PROJECT.getData(event.dataContext)
         val input = PsiFileFactory.getInstance(project)
             .createFileFromText(Language.findLanguageByID(JsonLanguage.INSTANCE.id)!!, "")
-//
-//        val directory = when (val navigatable = LangDataKeys.NAVIGATABLE.getData(event.dataContext)) {
-//            is PsiDirectory -> navigatable
-//            is PsiFile -> navigatable.containingDirectory
-//            else -> {
-//                val root = ModuleRootManager.getInstance(LangDataKeys.MODULE.getData(event.dataContext) ?: return)
-//                root.sourceRoots
-//                    .asSequence()
-//                    .mapNotNull {
-//                        PsiManager.getInstance(project).findDirectory(it)
-//                    }.firstOrNull()
-//            }
-//        } ?: return
-        val project1 = CommonDataKeys.PROJECT.getData(event.dataContext)
         val virtualFile = CommonDataKeys.VIRTUAL_FILE.getData(event.dataContext)
-        if (virtualFile == null || project1 == null) {
+        if (virtualFile == null || project == null) {
+            Messages.showMessageDialog(
+                project,
+                "The virtual file or the project cannot be null!",
+                "Error", Messages.getErrorIcon()
+            )
             return
         }
-        val directory = PsiManager.getInstance(project1).findDirectory(virtualFile)
-
-        GeneratorDialog(project, input) { fileName, code ->
-//            val output = PsiFileFactory.getInstance(project).createFileFromText("${fileName.trim('`')}.dart", DartFileType(), code)
-//            directory.add(output)
-//            getCurrentDirectory(event)?.createFile(it, "${fileName.trim('`')}.dart", code)
-//            getCurrentDirectory(event)?.createSubdirectory("data.text.toSnakeCase()")?.let {
-//                createFile(it, "${fileName.trim('`')}.dart", code)
-//            }
-            if (directory != null) {
-                WriteCommandAction.runWriteCommandAction(directory.project) {
-                    try {
-//                        val content = "This is a template content" // this can be replaced with your template content
-                        val file = PsiFileFactory.getInstance(directory.project)
-                            .createFileFromText("${fileName.trim('`')}.dart", DartFileType(), code)
-                        directory.add(file)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
+        val directory = PsiManager.getInstance(project).findDirectory(virtualFile)
+        if (directory == null) {
+            Messages.showMessageDialog(
+                project,
+                "Please select a folder you want to save this file",
+                "Directory Not Found", Messages.getErrorIcon()
+            )
+            return
         }
-    }
-
-    private fun createFile(directory: PsiDirectory) {
-        WriteCommandAction.runWriteCommandAction(directory.project) {
-            try {
-                val content = "This is a template content" // this can be replaced with your template content
-                val file = PsiFileFactory.getInstance(directory.project)
-                    .createFileFromText("NewFile.txt", PlainTextFileType.INSTANCE, content)
-                directory.add(file)
-            } catch (e: Exception) {
-                e.printStackTrace()
+        GeneratorDialog(project, input) { fileName, code ->
+            WriteCommandAction.runWriteCommandAction(directory.project) {
+                try {
+                    val file = PsiFileFactory.getInstance(directory.project)
+                        .createFileFromText("${fileName.trim('`')}.dart", DartFileType(), code)
+                    directory.add(file)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
         }
     }
