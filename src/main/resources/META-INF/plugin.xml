@@ -3,7 +3,18 @@
     <name>ProZ</name>
     <vendor email="lowjungxuan@gmail.com.com" url="https://www.linkedin.com/in/low-jung-xuan-442b32222/">Low Jung Xuan
     </vendor>
-    <description>This plugin is helping VeecoTech Developer increase performance</description>
+    <description>
+        <![CDATA[
+    <h2>Simplify, Focus, Deliver – That's ProZ</h2>
+    <ul>
+        <h3>Main Features</h3>
+        <li>GetX and Bloc Generator</li>
+        <li>GetX and Bloc Snippet</li>
+        <li>Json to Dart Generator</li>
+        <li>Flutter package's version checker</li>
+    </ul>
+    ]]>
+    </description>
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.plugins.yaml</depends>
     <depends>com.intellij.modules.lang</depends>
@@ -69,4 +80,51 @@
 
         </action>
     </actions>
+    <extensions defaultExtensionNs="com.intellij">
+        <!--Obx Action-->
+        <intentionAction>
+            <className>com.lowjungxuan.proz.newFolder.intention_action.WrapWithObxAction</className>
+            <category>GetX</category>
+        </intentionAction>
+        <!--GetBuilder Action-->
+        <intentionAction>
+            <className>com.lowjungxuan.proz.newFolder.intention_action.WrapWithGetBuilderAction</className>
+            <category>GetX</category>
+        </intentionAction>
+        <!--GetBuilder(Auto Dispose) Action-->
+        <intentionAction>
+            <className>com.lowjungxuan.proz.newFolder.intention_action.WrapWithGetBuilderAutoDisposeAction</className>
+            <category>GetX</category>
+        </intentionAction>
+        <!--GetX Action-->
+        <intentionAction>
+            <className>com.lowjungxuan.proz.newFolder.intention_action.WrapWithGetXAction</className>
+            <category>GetX</category>
+        </intentionAction>
+        <!--BlocBuilder Action-->
+        <intentionAction>
+            <className>com.lowjungxuan.proz.newFolder.intention_action.WrapWithBlocBuilderAction</className>
+            <category>Provider</category>
+        </intentionAction>
+        <!--BlocConsumer Action-->
+        <intentionAction>
+            <className>com.lowjungxuan.proz.newFolder.intention_action.WrapWithBlocConsumerAction</className>
+            <category>Provider</category>
+        </intentionAction>
+        <!--BlocListener Action-->
+        <intentionAction>
+            <className>com.lowjungxuan.proz.newFolder.intention_action.WrapWithBlocListenerAction</className>
+            <category>Provider</category>
+        </intentionAction>
+        <!--BlocProvider Action-->
+        <intentionAction>
+            <className>com.lowjungxuan.proz.newFolder.intention_action.WrapWithBlocProviderAction</className>
+            <category>Provider</category>
+        </intentionAction>
+        <!--RepositoryProvider Action-->
+        <intentionAction>
+            <className>com.lowjungxuan.proz.newFolder.intention_action.WrapWithRepositoryProviderAction</className>
+            <category>Provider</category>
+        </intentionAction>
+    </extensions>
 </idea-plugin>
