@@ -7,8 +7,8 @@ import com.intellij.openapi.fileEditor.impl.text.TextEditorProvider
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
 import com.lowjungxuan.proz.jsontodart.generator.ClazzGenerator
-import com.lowjungxuan.proz.jsontodart.utils.Settings
 import com.lowjungxuan.proz.jsontodart.utils.JSONUtils
+import com.lowjungxuan.proz.jsontodart.utils.Settings
 import com.lowjungxuan.proz.jsontodart.utils.createFileName
 import java.awt.BorderLayout
 import javax.swing.*

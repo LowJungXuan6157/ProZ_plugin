@@ -1,12 +1,12 @@
 package com.lowjungxuan.proz.versionchecker.parsing
 
-import io.sentry.Sentry
 import com.lowjungxuan.proz.versionchecker.dto.DependencyDescription
 import com.lowjungxuan.proz.versionchecker.util.VersionsRepository
 import com.lowjungxuan.proz.versionchecker.util.exceptions.UnableToGetCurrentVersionException
 import com.lowjungxuan.proz.versionchecker.util.exceptions.UnableToGetLatestVersionException
 import com.lowjungxuan.proz.versionchecker.util.exceptions.UnableToGetPackageNameException
 import com.lowjungxuan.proz.versionchecker.util.getDependencies
+import io.sentry.Sentry
 
 class YamlParser(
     private val fileContent: String,

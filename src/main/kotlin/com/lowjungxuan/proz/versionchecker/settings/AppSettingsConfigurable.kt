@@ -1,8 +1,8 @@
 package com.lowjungxuan.proz.versionchecker.settings
 
 import com.intellij.openapi.options.Configurable
-import org.jetbrains.annotations.Nls
 import com.lowjungxuan.proz.versionchecker.resources.Strings
+import org.jetbrains.annotations.Nls
 import javax.swing.JComponent
 
 class AppSettingsConfigurable : Configurable {
