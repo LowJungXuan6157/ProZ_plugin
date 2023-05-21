@@ -26,7 +26,6 @@ class ProZConfiguration : Configurable {
         return panel
     }
 
-
     override fun isModified(): Boolean {
         val settings = getSettings()
         for (checkbox in checkboxes) {
