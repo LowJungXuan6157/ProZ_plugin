@@ -1,4 +1,4 @@
-package com.lowjungxuan.proz
+package com.lowjungxuan.proz.newFolder
 
 import com.intellij.codeInsight.template.TemplateActionContext
 import com.intellij.codeInsight.template.TemplateContextType

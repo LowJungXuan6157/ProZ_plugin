@@ -14,8 +14,10 @@ class ${name.toCamelCase()}Page extends GetView<${name.toCamelCase()}Controller>
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return const Scaffold(
+      body: Center(
         child: Text('${name.toCamelCase()} Page'),
+      ),
     );
   }
 }"""
@@ -102,9 +104,10 @@ class ${name.toCamelCase()}Page extends StatelessWidget {
 
   Widget _buildPage(BuildContext context) {
     final bloc = BlocProvider.of<${name.toCamelCase()}Bloc>(context);
-
-    return const Center(
+    return const Scaffold(
+      body: Center(
         child: Text('${name.toCamelCase()} Page'),
+      ),
     );
   }
 }"""

@@ -5,14 +5,7 @@
     </vendor>
     <description>
         <![CDATA[
-    <h2>Simplify, Focus, Deliver – That's ProZ</h2>
-    <ul>
-        <h3>Main Features</h3>
-        <li>GetX and Bloc Generator</li>
-        <li>GetX and Bloc Snippet</li>
-        <li>Json to Dart Generator</li>
-        <li>Flutter package's version checker</li>
-    </ul>
+    <h2>Simplify, Focus, Deliver – That's ProZ</h2><ul><h3>Main Features</h3><li>GetX and Bloc Generator</li><li>GetX and Bloc Snippet</li><li>Json to Dart Generator</li><li>Flutter package's version checker</li></ul>
     ]]>
     </description>
     <depends>com.intellij.modules.platform</depends>
@@ -26,18 +19,15 @@
     </change-notes>
     <!-- Code Inspection Component  -->
     <extensions defaultExtensionNs="com.intellij">
-
         <externalAnnotator
                 language="yaml"
                 implementationClass="com.lowjungxuan.proz.versionchecker.annotator.PubPackagesAnnotator"/>
     </extensions>
-
     <!-- Settings -->
     <extensions defaultExtensionNs="com.intellij">
         <applicationService
                 serviceImplementation="com.lowjungxuan.proz.versionchecker.settings.AppSettingsState"/>
     </extensions>
-
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable
                 parentId="tools"
@@ -45,14 +35,13 @@
                 id="com.lowjungxuan.proz.versionchecker.settings.AppSettingsConfigurable"
                 displayName="ProZ Setting"/>
     </extensions>
-
     <extensions defaultExtensionNs="com.intellij">
         <defaultLiveTemplates file="liveTemplates/GetX.xml"/>
-        <liveTemplateContext id="FLUTTER" implementation="com.lowjungxuan.proz.FlutterLiveTemplateContext"/>
+        <liveTemplateContext id="FLUTTER" implementation="com.lowjungxuan.proz.newFolder.FlutterLiveTemplateContext"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij">
         <defaultLiveTemplates file="liveTemplates/Bloc.xml"/>
-        <liveTemplateContext id="FLUTTER" implementation="com.lowjungxuan.proz.FlutterLiveTemplateContext"/>
+        <liveTemplateContext id="FLUTTER" implementation="com.lowjungxuan.proz.newFolder.FlutterLiveTemplateContext"/>
     </extensions>
     <actions>
         <action
@@ -60,24 +49,16 @@
                 class="com.lowjungxuan.proz.newFolder.NewFolderCreator"
                 text="GetX Bloc"
                 description="Create a new folder and Dart files."
-                icon="com.lowjungxuan.proz.MyIcons.GetX"
-        >
+                icon="com.lowjungxuan.proz.MyIcons.GetX">
             <add-to-group group-id="NewGroup" anchor="first"/>
         </action>
     </actions>
     <actions>
-        <!-- Add your actions here -->
-        <action id="com.lowjungxuan.proz.jsontodart.DartJsonGenerateAction" class="com.lowjungxuan.proz.jsontodart.DartJsonGenerateAction" text="Dart Class from JSON">
-            <add-to-group group-id="GenerateGroup" anchor="first"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="meta N"/>
-        </action>
-
         <action id="DartJsonGenerator"
                 class="com.lowjungxuan.proz.jsontodart.DartJsonNewFileAction"
                 text="Dart Class from JSON"
                 icon="com.lowjungxuan.proz.MyIcons.GetX">
-            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
-
+            <add-to-group group-id="NewGroup" anchor="first"/>
         </action>
     </actions>
     <extensions defaultExtensionNs="com.intellij">
