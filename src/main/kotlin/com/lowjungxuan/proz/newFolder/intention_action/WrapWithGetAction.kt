@@ -1,54 +1,54 @@
 package com.lowjungxuan.proz.newFolder.intention_action
 
-class WrapWithGetBuilderAction : WrapWithAction(SnippetType.GetBuilder) {
+class WrapWithGetBuilderAction : WrapWithGetAction(SnippetType.GetBuilder) {
     override fun getText(): String {
         return "Wrap with GetBuilder"
     }
 }
 
-class WrapWithGetBuilderAutoDisposeAction : WrapWithAction(SnippetType.GetBuilderAutoDispose) {
+class WrapWithGetBuilderAutoDisposeAction : WrapWithGetAction(SnippetType.GetBuilderAutoDispose) {
     override fun getText(): String {
         return "Wrap with GetBuilder (Auto Dispose)"
     }
 }
 
-class WrapWithGetXAction : WrapWithAction(SnippetType.GetX) {
+class WrapWithGetXAction : WrapWithGetAction(SnippetType.GetX) {
     override fun getText(): String {
         return "Wrap with GetX"
     }
 }
 
-class WrapWithObxAction : WrapWithAction(SnippetType.Obx) {
+class WrapWithObxAction : WrapWithGetAction(SnippetType.Obx) {
     override fun getText(): String {
         return "Wrap with Obx"
     }
 }
 
-class WrapWithBlocBuilderAction : WrapWithAction(SnippetType.BlocBuilder) {
+class WrapWithBlocBuilderAction : WrapWithBlocAction(SnippetType.BlocBuilder) {
     override fun getText(): String {
         return "Wrap with BlocBuilder"
     }
 }
 
-class WrapWithBlocConsumerAction : WrapWithAction(SnippetType.BlocConsumer) {
+class WrapWithBlocConsumerAction : WrapWithBlocAction(SnippetType.BlocConsumer) {
     override fun getText(): String {
         return "Wrap with BlocConsumer"
     }
 }
 
-class WrapWithBlocListenerAction : WrapWithAction(SnippetType.BlocListener) {
+class WrapWithBlocListenerAction : WrapWithBlocAction(SnippetType.BlocListener) {
     override fun getText(): String {
         return "Wrap with BlocListener"
     }
 }
 
-class WrapWithBlocProviderAction : WrapWithAction(SnippetType.BlocProvider) {
+class WrapWithBlocProviderAction : WrapWithBlocAction(SnippetType.BlocProvider) {
     override fun getText(): String {
         return "Wrap with BlocProvider"
     }
 }
 
-class WrapWithRepositoryProviderAction : WrapWithAction(SnippetType.RepositoryProvider) {
+class WrapWithRepositoryProviderAction : WrapWithBlocAction(SnippetType.RepositoryProvider) {
     override fun getText(): String {
         return "Wrap with RepositoryProvider"
     }

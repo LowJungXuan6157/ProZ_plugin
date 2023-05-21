@@ -62,6 +62,10 @@
         </action>
     </actions>
     <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.lowjungxuan.proz.settings.ProZSetting" />
+        <projectConfigurable instance="com.lowjungxuan.proz.settings.ProZConfiguration" />
+    </extensions>
+    <extensions defaultExtensionNs="com.intellij">
         <!--Obx Action-->
         <intentionAction>
             <className>com.lowjungxuan.proz.newFolder.intention_action.WrapWithObxAction</className>

@@ -9,42 +9,81 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiElement
-import com.intellij.psi.PsiFile
 import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.util.IncorrectOperationException
+import com.lowjungxuan.proz.newFolder.intention_action.WrapWithActionUtils.invokeSnippetAction
+import com.lowjungxuan.proz.newFolder.intention_action.WrapWithActionUtils.isAvailableChecker
+import com.lowjungxuan.proz.settings.ProZSetting
 
-abstract class WrapWithAction(private val snippetType: SnippetType) : PsiElementBaseIntentionAction(), IntentionAction {
+abstract class WrapWithGetAction(private val snippetType: SnippetType) : PsiElementBaseIntentionAction(), IntentionAction {
     private var psiElement: PsiElement? = null
 
     override fun getFamilyName(): String {
         return text
     }
 
-    override fun isAvailable(project: Project, editor: Editor?, element: PsiElement): Boolean {
+    override fun isAvailable(project: Project, editor: Editor?, element: PsiElement) = isAvailableChecker(
+        project, editor, element, "GetX"
+    ) {
+        psiElement = it
+    }
+
+    @Throws(IncorrectOperationException::class)
+    override fun invoke(project: Project, editor: Editor, element: PsiElement) {
+        val runnable = Runnable { invokeSnippetAction(project, editor, snippetType, psiElement) }
+        WriteCommandAction.runWriteCommandAction(project, runnable)
+    }
+
+    override fun startInWriteAction(): Boolean {
+        return true
+    }
+}
+
+abstract class WrapWithBlocAction(private val snippetType: SnippetType) : PsiElementBaseIntentionAction(), IntentionAction {
+    private var psiElement: PsiElement? = null
+
+    override fun getFamilyName(): String {
+        return text
+    }
+
+    override fun isAvailable(project: Project, editor: Editor?, element: PsiElement) = isAvailableChecker(
+        project, editor, element, "Bloc"
+    ) {
+        psiElement = it
+    }
+
+    @Throws(IncorrectOperationException::class)
+    override fun invoke(project: Project, editor: Editor, element: PsiElement) {
+        val runnable = Runnable { invokeSnippetAction(project, editor, snippetType, psiElement) }
+        WriteCommandAction.runWriteCommandAction(project, runnable)
+    }
+
+    override fun startInWriteAction(): Boolean {
+        return true
+    }
+}
+
+object WrapWithActionUtils {
+    fun isAvailableChecker(project: Project, editor: Editor?, element: PsiElement, category: String, psiElement: (PsiElement?) -> Unit): Boolean {
+        val settingsService = ApplicationManager.getApplication().getService(ProZSetting::class.java)
         if (editor == null) {
             return false
         }
-        val currentFile = getCurrentFile(project, editor)
+        val currentFile = PsiDocumentManager.getInstance(project).getPsiFile(editor.document)
         if (currentFile != null && !currentFile.name.endsWith(".dart")) {
             return false
         }
         if (!element.toString().contains("PsiElement")) {
             return false
         }
-        psiElement = WrapHelper.callExpressionFinder(element)
-        return psiElement != null
+        psiElement(WrapHelper.callExpressionFinder(element))
+        val currentPsiElement = WrapHelper.callExpressionFinder(element)
+        return currentPsiElement != null && category in settingsService.state.enabledCategories
     }
 
-    @Throws(IncorrectOperationException::class)
-    override fun invoke(project: Project, editor: Editor, element: PsiElement) {
-        val runnable = Runnable { invokeSnippetAction(project, editor, snippetType) }
-        WriteCommandAction.runWriteCommandAction(project, runnable)
-    }
-
-    private fun invokeSnippetAction(project: Project, editor: Editor, snippetType: SnippetType?) {
+    fun invokeSnippetAction(project: Project, editor: Editor, snippetType: SnippetType?, psiElement: PsiElement?) {
         val document = editor.document
-        val element = psiElement
-        val elementSelectionRange = element!!.textRange
+        val elementSelectionRange = psiElement!!.textRange
         val offsetStart = elementSelectionRange.startOffset
         val offsetEnd = elementSelectionRange.endOffset
         if (!WrapHelper.isSelectionValid(offsetStart, offsetEnd)) {
@@ -84,7 +123,7 @@ abstract class WrapWithAction(private val snippetType: SnippetType) : PsiElement
         // reformat file:
         ApplicationManager.getApplication().runWriteAction {
             PsiDocumentManager.getInstance(project).commitDocument(document)
-            val currentFile = getCurrentFile(project, editor)
+            val currentFile = PsiDocumentManager.getInstance(project).getPsiFile(editor.document)
             if (currentFile != null) {
                 val unFormattedLineCount = document.lineCount
                 CodeStyleManager.getInstance(project).reformat(currentFile)
@@ -97,13 +136,5 @@ abstract class WrapWithAction(private val snippetType: SnippetType) : PsiElement
                 }
             }
         }
-    }
-
-    override fun startInWriteAction(): Boolean {
-        return true
-    }
-
-    private fun getCurrentFile(project: Project, editor: Editor): PsiFile? {
-        return PsiDocumentManager.getInstance(project).getPsiFile(editor.document)
     }
 }
