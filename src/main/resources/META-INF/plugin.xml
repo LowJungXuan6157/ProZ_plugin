@@ -112,4 +112,24 @@
             <category>Provider</category>
         </intentionAction>
     </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable parentId="appearance" instance="com.lowjungxuan.proz.inlineHint.settings.SettingsConfigurable"
+                                 id="com.lowjungxuan.proz.inlineHint.settings.SettingsConfigurable"
+                                 displayName="InlineProblems"/>
+        <applicationService serviceImplementation="com.lowjungxuan.proz.inlineHint.settings.SettingsState"/>
+        <applicationService serviceImplementation="com.lowjungxuan.proz.inlineHint.ProblemManager"/>
+        <daemon.highlightInfoFilter implementation="com.lowjungxuan.proz.inlineHint.listeners.HighlightProblemListener" id="com.lowjungxuan.proz.inlineHint.listeners.HighlightProblemListener" />
+
+        <postStartupActivity implementation="com.lowjungxuan.proz.inlineHint.ProjectStartupActivity" />
+    </extensions>
+
+    <projectListeners>
+        <listener class="com.lowjungxuan.proz.inlineHint.listeners.FileEditorListener"
+                  topic="com.intellij.openapi.fileEditor.FileEditorManagerListener" />
+    </projectListeners>
+
+    <applicationListeners>
+        <listener class="com.lowjungxuan.proz.inlineHint.listeners.PluginListener" topic="com.intellij.ide.plugins.DynamicPluginListener" />
+        <listener class="com.lowjungxuan.proz.inlineHint.listeners.ProjectCloseListener" topic="com.intellij.openapi.project.ProjectManagerListener" />
+    </applicationListeners>
 </idea-plugin>

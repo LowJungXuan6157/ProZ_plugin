@@ -10,6 +10,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.22.0"
     // ktlint linter - read more: https://github.com/JLLeitschuh/ktlint-gradle
     id("org.jlleitschuh.gradle.ktlint") version "11.3.2"
+    id("io.freefair.lombok") version "6.6"
 }
 
 group = "com.lowjungxuan"
@@ -24,6 +25,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.7.1")
+    implementation("org.projectlombok:lombok:1.18.26")
 }
 
 repositories {
@@ -90,5 +92,10 @@ tasks {
 
     publishPlugin {
         token.set(System.getenv("PUBLISH_TOKEN"))
+    }
+
+    runIde {
+        maxHeapSize = "4g"
+        minHeapSize = "2g"
     }
 }
