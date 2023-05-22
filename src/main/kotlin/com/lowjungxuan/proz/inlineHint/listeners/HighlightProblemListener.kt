@@ -8,4 +8,8 @@ class HighlightProblemListener : HighlightInfoFilter {
     override fun accept(highlightInfo: HighlightInfo, file: PsiFile?): Boolean {
         TODO("Not yet implemented")
     }
+
+    companion object {
+        val NAME: String = "HighlightProblemListener (Deprecated)"
+    }
 }

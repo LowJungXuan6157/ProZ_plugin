@@ -115,7 +115,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable parentId="appearance" instance="com.lowjungxuan.proz.inlineHint.settings.SettingsConfigurable"
                                  id="com.lowjungxuan.proz.inlineHint.settings.SettingsConfigurable"
-                                 displayName="InlineProblems"/>
+                                 displayName="InlineHint"/>
         <applicationService serviceImplementation="com.lowjungxuan.proz.inlineHint.settings.SettingsState"/>
         <applicationService serviceImplementation="com.lowjungxuan.proz.inlineHint.ProblemManager"/>
         <daemon.highlightInfoFilter implementation="com.lowjungxuan.proz.inlineHint.listeners.HighlightProblemListener" id="com.lowjungxuan.proz.inlineHint.listeners.HighlightProblemListener" />
