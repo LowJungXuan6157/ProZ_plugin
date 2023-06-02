@@ -53,7 +53,7 @@ class GeneratorDialog(
     }
 
     private fun prettify(postAction: () -> Unit) {
-        validator.prettify(input.text) { prettyJson ->
+        validator.prettify { prettyJson ->
             (editor as? TextEditor)?.editor?.let { editor ->
                 SwingUtilities.invokeAndWait {
                     editor.document.setText(prettyJson)

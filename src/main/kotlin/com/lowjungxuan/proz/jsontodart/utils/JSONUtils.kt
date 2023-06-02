@@ -31,7 +31,7 @@ class JSONUtils {
         }
     }
 
-    fun prettify(json: String, result: (String)->Unit) {
+    fun prettify(result: (String) -> Unit) {
         validateJob?.invokeOnCompletion {
             GlobalScope.launch(Dispatchers.IO) {
                 mutex.withLock {
@@ -44,7 +44,7 @@ class JSONUtils {
                         }
                         val prettyJson = gson.toJson(`object`)
                         result(prettyJson)
-                    } catch (e: Throwable) {}
+                    } catch (_: Throwable) {}
                 }
             }
         }
