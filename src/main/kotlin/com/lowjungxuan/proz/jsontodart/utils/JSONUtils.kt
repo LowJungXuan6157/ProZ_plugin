@@ -12,7 +12,7 @@ class JSONUtils {
     private var validateJob: Job? = null
     private val mutex = Mutex()
     private val gson = GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create()
-    private val parser = JsonParser()
+//    private val parser = JsonParser
     private var jsonElement: JsonElement? = null
 
     fun validate(json: String, result: (Boolean)->Unit) {
@@ -21,7 +21,7 @@ class JSONUtils {
         validateJob?.cancel()
         validateJob = GlobalScope.launch(Dispatchers.IO) {
             val isValid = try {
-                val element = parser.parse(json).also { jsonElement = it }
+                val element = JsonParser.parseString(json).also { jsonElement = it }
                 (element.isJsonObject || element.isJsonArray)
             } catch (e: Throwable) {
                 false
