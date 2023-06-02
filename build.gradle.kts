@@ -2,12 +2,12 @@ import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.8.20"
+    id("org.jetbrains.kotlin.jvm") version "1.9.0-Beta"
     id("org.jetbrains.intellij") version "1.13.3"
     // gradle-changelog-plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
     id("org.jetbrains.changelog") version "2.0.0"
     // detekt linter - read more: https://detekt.github.io/detekt/gradle.html
-    id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.0"
     // ktlint linter - read more: https://github.com/JLLeitschuh/ktlint-gradle
     id("org.jlleitschuh.gradle.ktlint") version "11.3.2"
 }
@@ -16,10 +16,9 @@ group = "com.lowjungxuan"
 version = "0.0.1"
 
 dependencies {
-    implementation("io.sentry:sentry:5.7.3")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.1")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.0-RC3")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.0.0")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.0")
     testImplementation(platform("org.junit:junit-bom:5.10.0-M1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
@@ -53,7 +52,7 @@ intellij {
 }
 
 detekt {
-    config = files("./detekt-config.yml")
+    config.from(files("./detekt-config.yml"))
     buildUponDefaultConfig = true
 }
 

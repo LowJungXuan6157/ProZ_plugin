@@ -4,13 +4,12 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
 import com.google.gson.JsonParser
-import com.intellij.util.containers.isNullOrEmpty
 import com.lowjungxuan.proz.jsontodart.utils.Settings
 import com.lowjungxuan.proz.utils.toCamelCase
 
 class ClazzGenerator(val settings: Settings?) {
 
-    fun generate(fileName: String, className: String, json: String) = try {
+    fun generate(className: String, json: String) = try {
         JsonParser().parse(json).let {
             when (it) {
                 is JsonObject -> it.asJsonObject

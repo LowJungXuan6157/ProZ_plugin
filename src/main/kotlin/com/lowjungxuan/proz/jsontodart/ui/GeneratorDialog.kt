@@ -90,7 +90,7 @@ class GeneratorDialog(
                     fileName = createFileName(classNameField.text)
                 )
 
-                val code = ClazzGenerator(settings).generate(model.fileName, model.className, input.text)
+                val code = ClazzGenerator(settings).generate(model.className, input.text)
 
                 onGenerate(model.fileName, code)
 

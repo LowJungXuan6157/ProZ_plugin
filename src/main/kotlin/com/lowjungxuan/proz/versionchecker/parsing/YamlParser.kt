@@ -6,7 +6,6 @@ import com.lowjungxuan.proz.versionchecker.util.exceptions.UnableToGetCurrentVer
 import com.lowjungxuan.proz.versionchecker.util.exceptions.UnableToGetLatestVersionException
 import com.lowjungxuan.proz.versionchecker.util.exceptions.UnableToGetPackageNameException
 import com.lowjungxuan.proz.versionchecker.util.getDependencies
-import io.sentry.Sentry
 
 class YamlParser(
     private val fileContent: String,
@@ -28,13 +27,10 @@ class YamlParser(
                 val latestVersion = versionsRepository.getLatestVersion(it.packageName)
                 DependencyDescription(it, latestVersion)
             } catch (e: UnableToGetLatestVersionException) {
-                Sentry.captureException(e)
                 null
             } catch (e: UnableToGetCurrentVersionException) {
-                Sentry.captureException(e)
                 null
             } catch (e: UnableToGetPackageNameException) {
-                Sentry.captureException(e)
                 null
             }
         }
