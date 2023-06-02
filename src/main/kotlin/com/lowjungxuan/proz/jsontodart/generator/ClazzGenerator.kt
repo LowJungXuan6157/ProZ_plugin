@@ -10,7 +10,7 @@ import com.lowjungxuan.proz.utils.toCamelCase
 class ClazzGenerator(val settings: Settings?) {
 
     fun generate(className: String, json: String) = try {
-        JsonParser().parse(json).let {
+        JsonParser.parseString(json).let {
             when (it) {
                 is JsonObject -> it.asJsonObject
                 is JsonArray -> it.asJsonArray[0].asJsonObject
