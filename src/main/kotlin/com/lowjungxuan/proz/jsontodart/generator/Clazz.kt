@@ -42,7 +42,7 @@ abstract class Clazz(
             }
         }
 
-        fun json2Clazz(root: MutableList<Clazz>, jsonObject: JsonObject): List<Clazz> {
+        private fun json2Clazz(root: MutableList<Clazz>, jsonObject: JsonObject): List<Clazz> {
             val list = mutableListOf<Clazz>()
             for (o in jsonObject.entrySet()) {
                 val entry = o as Map.Entry<*, *>

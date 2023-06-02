@@ -20,23 +20,6 @@ import com.lowjungxuan.proz.jsontodart.utils.write
 import com.lowjungxuan.proz.utils.toCamelCase
 
 
-class DartJsonGenerateAction : AnAction() {
-    override fun actionPerformed(event: AnActionEvent) {
-        val project = event.getData(PlatformDataKeys.PROJECT) as Project
-        val input = PsiFileFactory.getInstance(project)
-            .createFileFromText(Language.findLanguageByID(JsonLanguage.INSTANCE.id)!!, "")
-        val output =
-            PsiUtilBase.getPsiFileInEditor(event.getData(PlatformDataKeys.EDITOR) as Editor, project)!!.virtualFile
-        val className = output.nameWithoutExtension.toCamelCase()
-            .split("_")
-            .reduce { acc, s -> "$acc${s.toCamelCase()}" }
-
-        GeneratorDialog(project, input, Model(className, output.nameWithoutExtension)) { _, code ->
-            output.write(project, code)
-        }
-    }
-}
-
 class DartJsonNewFileAction : AnAction() {
     override fun actionPerformed(event: AnActionEvent) {
         val project = CommonDataKeys.PROJECT.getData(event.dataContext)

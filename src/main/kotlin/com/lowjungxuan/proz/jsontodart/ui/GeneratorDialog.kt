@@ -1,3 +1,5 @@
+@file:OptIn(DelicateCoroutinesApi::class)
+
 package com.lowjungxuan.proz.jsontodart.ui
 
 import com.intellij.openapi.editor.event.DocumentEvent
@@ -8,8 +10,8 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
 import com.lowjungxuan.proz.jsontodart.generator.ClazzGenerator
 import com.lowjungxuan.proz.jsontodart.utils.JSONUtils
-import com.lowjungxuan.proz.jsontodart.utils.Settings
 import com.lowjungxuan.proz.jsontodart.utils.createFileName
+import kotlinx.coroutines.DelicateCoroutinesApi
 import java.awt.BorderLayout
 import javax.swing.*
 
@@ -64,16 +66,11 @@ class GeneratorDialog(
     }
 
     private fun placeComponents(panel: JPanel) = panel.apply {
-        val settings = Settings()
-
         lateinit var classNameField: JTextField
 
         val button = JButton("Generate ${model?.className ?: ""}").apply {
             isEnabled = false
             addActionListener {
-                //settings.generateComments = commentCb.isSelected
-                settings.save()
-
                 if (classNameField.text.isEmpty()) {
                     JOptionPane.showMessageDialog(
                         frame,
@@ -90,7 +87,7 @@ class GeneratorDialog(
                     fileName = createFileName(classNameField.text)
                 )
 
-                val code = ClazzGenerator(settings).generate(model.className, input.text)
+                val code = ClazzGenerator().generate(model.className, input.text)
 
                 onGenerate(model.fileName, code)
 

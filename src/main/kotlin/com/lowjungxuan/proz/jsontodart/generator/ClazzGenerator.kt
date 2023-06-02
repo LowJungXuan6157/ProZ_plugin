@@ -4,10 +4,9 @@ import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
 import com.google.gson.JsonParser
-import com.lowjungxuan.proz.jsontodart.utils.Settings
 import com.lowjungxuan.proz.utils.toCamelCase
 
-class ClazzGenerator(val settings: Settings?) {
+class ClazzGenerator {
 
     fun generate(className: String, json: String) = try {
         JsonParser.parseString(json).let {
