@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "com.lowjungxuan"
-version = "0.0.1"
+version = "0.0.2"
 
 dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.1")

@@ -36,12 +36,17 @@ class DartJsonNewFileAction : AnAction() {
             )
             return
         }
-        GeneratorDialog(project, input) { fileName, code ->
+        GeneratorDialog(project, input) { fileName, code, options, base->
             WriteCommandAction.runWriteCommandAction(directory.project) {
                 try {
                     val file = PsiFileFactory.getInstance(directory.project)
                         .createFileFromText("${fileName.trim('`')}.dart", DartFileType(), code)
                     directory.add(file)
+                    if(options != 1){
+                        val baseFile = PsiFileFactory.getInstance(directory.project)
+                            .createFileFromText("base_response.dart", DartFileType(), base)
+                        directory.add(baseFile)
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

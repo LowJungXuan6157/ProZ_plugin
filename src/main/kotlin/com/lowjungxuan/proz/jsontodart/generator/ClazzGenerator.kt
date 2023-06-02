@@ -8,7 +8,7 @@ import com.lowjungxuan.proz.utils.toCamelCase
 
 class ClazzGenerator {
 
-    fun generate(className: String, json: String) = try {
+    fun generate(className: String, json: String, option: Int) = try {
         JsonParser.parseString(json).let {
             when (it) {
                 is JsonObject -> it.asJsonObject
@@ -21,9 +21,11 @@ class ClazzGenerator {
             }
         }.let { (clazz, clazzes) ->
             val sb = StringBuilder()
-
-            sb.append("import 'package:pro_z/pro_z.dart';\n\n")
-
+            if (option == 1) {
+                sb.append("import 'package:pro_z/pro_z.dart';\n\n")
+            } else {
+                sb.append("import 'base_response.dart';\n\n")
+            }
             clazzes.reversed().forEach {
                 sb.append(printClazz(it == clazz, it))
                 sb.append("\n\n")
@@ -42,6 +44,50 @@ class ClazzGenerator {
             "error: unknown"
         }
     }
+
+    fun generateBase(): String {
+        val sb = StringBuilder()
+        sb.append("abstract class Serializable {\n")
+        sb.append("    fromJson(Map<String, dynamic>? json);\n")
+        sb.append("\n")
+        sb.append("    Map<String, dynamic> toJson();\n")
+        sb.append("\n")
+        sb.append("    listFromJson(List? json);\n")
+        sb.append("}\n")
+        sb.append("class BaseResponse<T extends Serializable> {\n")
+        sb.append("    bool? success;\n")
+        sb.append("    String? message;\n")
+        sb.append("    T? data;\n")
+        sb.append("    List<T>? datas;\n")
+        sb.append("    BaseResponse({\n")
+        sb.append("        this.message,\n")
+        sb.append("        this.success,\n")
+        sb.append("        this.data,\n")
+        sb.append("        this.datas,\n")
+        sb.append("    });\n")
+        sb.append("    factory BaseResponse.fromJson(T item, Map<String, dynamic> json) {\n")
+        sb.append("    var jsonData = json['data'];\n")
+        sb.append("    if (jsonData is List && jsonData.isEmpty) jsonData = [];\n")
+        sb.append("    final success = json['success'];\n")
+        sb.append("    T? mItem;\n")
+        sb.append("    List<T>? mItemList;\n")
+        sb.append("    if (success) {\n")
+        sb.append("        if (jsonData is List) {\n")
+        sb.append("            mItemList = item.listFromJson(jsonData);\n")
+        sb.append("        } else {\n")
+        sb.append("            mItem = item.fromJson(jsonData);\n")
+        sb.append("        }\n")
+        sb.append("    }\n")
+        sb.append("    return BaseResponse<T>(\n")
+        sb.append("        success: json['success'],\n")
+        sb.append("        message: json.containsKey('message') ? json['message'] : '',\n")
+        sb.append("    data: mItem,\n")
+        sb.append("    datas: mItemList,\n")
+        sb.append("    );\n")
+        sb.append("  }\n")
+        sb.append("}\n")
+        return sb.toString()
+    }//
 
     private fun printClazz(keepName: Boolean, clazz: Clazz): String {
         val sb = StringBuilder()
