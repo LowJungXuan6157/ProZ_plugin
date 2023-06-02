@@ -5,19 +5,12 @@ import com.intellij.lang.Language
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.actionSystem.PlatformDataKeys
 import com.intellij.openapi.command.WriteCommandAction
-import com.intellij.openapi.editor.Editor
-import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 import com.intellij.psi.PsiFileFactory
 import com.intellij.psi.PsiManager
-import com.intellij.psi.util.PsiUtilBase
 import com.lowjungxuan.proz.jsontodart.ui.GeneratorDialog
-import com.lowjungxuan.proz.jsontodart.ui.Model
 import com.lowjungxuan.proz.jsontodart.utils.DartFileType
-import com.lowjungxuan.proz.jsontodart.utils.write
-import com.lowjungxuan.proz.utils.toCamelCase
 
 
 class DartJsonNewFileAction : AnAction() {
